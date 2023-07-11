@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "blog": {
+      "title": "Blog",
+      "body": "Learn how Astro works and explore the docs."
+    },
+    "snippet": {
+      "title": "Snippets",
+      "body": "Supercharge your projects with new frameworks and libraries."
+    },
+    "about": {
+      "title": "About",
+      "body": "Supercharge your projects with new frameworks and libraries."
+    }
+  }
+}

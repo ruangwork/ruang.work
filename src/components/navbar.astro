@@ -1,0 +1,25 @@
+---
+import { localizePath } from "astro-i18next";
+import { t } from "i18next";
+---
+
+<ul>
+  <li>
+    <a href={localizePath("/")}>
+      {t("nav.blog.title")}
+    </a>
+  </li>
+  <li>
+    <a href={localizePath("/snippets")}>
+      {t("nav.snippet.title")}
+    </a>
+  </li>
+  <li>
+    <a href={localizePath("/about")}>
+      {t("nav.about.title")}
+    </a>
+  </li>
+  <li>
+    <a href="https://twitter.com/astrodotbuild"> twitter</a>
+  </li>
+</ul>

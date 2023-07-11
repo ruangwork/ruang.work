@@ -1,0 +1,29 @@
+---
+import { changeLanguage } from "i18next";
+import Base from "@/layouts/base.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("blog");
+  const paths = pages.map((page) => {
+    const [lang, ...slug] = page.slug.split("/");
+    return { params: { lang, slug: slug.join("/") || undefined }, props: page };
+  });
+  return paths;
+}
+
+const { lang, slug } = Astro.params;
+
+changeLanguage(lang);
+
+const page = Astro.props;
+const formattedDate = page.data.date.toLocaleString(lang);
+
+const { Content } = await page.render();
+---
+
+<Base>
+  <h1>{page.data.title}</h1>
+  <p>by {page.data.author} • {formattedDate}</p>
+  <Content />
+</Base>

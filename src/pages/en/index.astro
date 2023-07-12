@@ -3,35 +3,27 @@ import i18next, { changeLanguage } from "i18next";
 import Base from "@/layouts/base.astro";
 import { localizePath } from "astro-i18next";
 import { getCollection } from "astro:content";
-import { Trans } from "astro-i18next/components";
 
 changeLanguage("en");
 
 const posts = await getCollection("blog", ({ id }) => {
     return id.startsWith(`${i18next.language}/`);
 });
-const pages = await getCollection("blog");
-
-const paths = pages.map((page) => {
-    const [lang, ...slug] = page.slug.split("/");
-    return {
-        params: { lang, slug: slug.join("/") || undefined },
-        // props: page,
-    };
-});
 ---
 
 <Base>
-    <section style="display: grid;">
-        {
-            posts.length !== 0 &&
-                posts.slice(0, 2).map((post) => (
-                    <a href={localizePath(`${post.slug}`)}>
-                        {post.slug}
-                        <br />
-                        {post.data.title}
-                    </a>
-                ))
-        }
-    </section>
+    <main class="max-w-7xl mx-auto py-12">
+        <section class="grid gap-4">
+            {
+                posts.length !== 0 &&
+                    posts.map((post) => (
+                        <a href={localizePath(`${post.slug}`)}>
+                            {post.slug}
+                            <br />
+                            {post.data.title}
+                        </a>
+                    ))
+            }
+        </section>
+    </main>
 </Base>

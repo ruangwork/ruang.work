@@ -3,6 +3,10 @@ import { changeLanguage } from "i18next";
 import Base from "@/layouts/base.astro";
 import { getCollection } from "astro:content";
 
+// mdx custom
+import Ads from "@/components/mdx/ads.astro";
+import TOC from "@/components/mdx/toc.astro";
+
 export async function getStaticPaths() {
   const pages = await getCollection("blog");
   const paths = pages.map((page) => {
@@ -12,18 +16,37 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { lang, slug } = Astro.params;
+const { lang } = Astro.params;
 
 changeLanguage(lang);
 
 const page = Astro.props;
 const formattedDate = page.data.date.toLocaleString(lang);
 
-const { Content } = await page.render();
+const { Content, remarkPluginFrontmatter, headings } = await page.render();
 ---
 
 <Base>
-  <h1>{page.data.title}</h1>
-  <p>by {page.data.author} • {formattedDate}</p>
-  <Content />
+  <div class="grid grid-cols-4 gap-x-8">
+    <article class="prose col-span-2">
+      <h1>{page.data.title}</h1>
+      <h5>{remarkPluginFrontmatter.minutesRead}</h5>
+      <p>by {page.data.author} • {formattedDate}</p>
+      <Content components={{ Ads }} />
+    </article>
+    <aside class="max-lg:hidden">
+      <div class="sticky top-20 h-[80vh] overflow-y-auto pr-4 pb-12">
+        <TOC headings={headings} />
+        <div class="my-4 h-px w-full bg-black"></div>
+        <div class="flex justify-between">
+          <button
+            id="scroll-top"
+            type="button"
+            class="text-sm text-zinc-600 hover:text-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-400"
+            >Back to top</button
+          >
+        </div>
+      </div>
+    </aside>
+  </div>
 </Base>

@@ -1,21 +1,29 @@
 ---
 title: "README: What's included in this Engineering Blog template?"
 date: 2023-05-24
-author: eddy-vinck
+authors:
+  - eddy-vinck
+desc: "Astro Starter Kit: Multilanguague Blog"
+topics: ["docs", "coding"]
+tags:
+  - astro
+  - solid
+  - tailwind
+  - fuse
 ---
 
 <Ads />
 
-# Astro Starter Kit: Engineering Blog
+# Astro Starter Kit: Multilanguague Blog
 
-This template was built to easily create an engineering blog for one or multiple authors.
+This template was built to easily create an Multilanguague blog for one or multiple authors.
 
-Demo: https://astro-engineering-blog.netlify.app/
+Demo:
 
 ## Getting started
 
 ```
-npm create astro@latest -- --template eddyvinck/astro-engineering-blog
+npm create astro@latest -- --template inurhuda/tassimo
 ```
 
 ### Configuration
@@ -23,14 +31,14 @@ npm create astro@latest -- --template eddyvinck/astro-engineering-blog
 Edit the values in `src/consts.ts` to match your brand or company:
 
 ```ts
-export const BRAND = "Acme";
-export const SITE_TITLE = "Acme Engineering";
-export const SITE_URL = "https://astro-engineering-blog.netlify.app";
-export const SITE_DESCRIPTION = "Welcome to the Acme Engineering blog!";
+export const BRAND = "RW";
+export const SITE_TITLE = "Ruang Work";
+export const SITE_URL = "";
+export const SITE_DESCRIPTION = "Welcome to the ruang work";
 export const PAGINATION_POSTS_PER_PAGE = 5;
 ```
 
-Change any lines or add more in the `<head>` tags in `src/components/BaseHead.astro`, like the favicon:
+Change any lines or add more in the `<head>` tags in `src/components/meta/head.astro`, like the favicon:
 
 ```html
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -94,10 +102,10 @@ Inside of your Astro project, you'll see the following folders and files:
 ```
 ├── public/
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
+│   ├── components/
+│   ├── content/
+│   ├── layouts/
+│   └── pages/
 ├── astro.config.mjs
 ├── README.md
 ├── package.json

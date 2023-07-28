@@ -7,16 +7,27 @@ import Navbar from "@/components/navbar.astro";
 ---
 
 <html lang={i18next.language}>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <HeadHrefLangs />
-        <title>Astro</title>
-    </head>
-    <body>
-        <Navbar />
-        <slot />
-        <LanguageSelector showFlag={true} />
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <HeadHrefLangs />
+    <title>Astro</title>
+  </head>
+  <body class="max-w-lg px-4 mx-auto">
+    <Navbar />
+    <main>
+      <slot />
+    </main>
+    <LanguageSelector showFlag={true} />
+
+    <footer class="mt-12 mb-6">
+      <p>
+        Semua kode dalam situs dilisensikan dibawah MIT License kecuali
+        dinyatakan sebaliknya
+      </p>
+      <hr class="my-6" />
+      <p>© ruang.work 2023 - {new Date().getFullYear()}</p>
+    </footer>
+  </body>
 </html>

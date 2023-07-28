@@ -1,0 +1,62 @@
+---
+import i18next, { changeLanguage } from "i18next";
+import Base from "@/layouts/base.astro";
+import { CollectionEntry, getCollection } from "astro:content";
+import type { GetStaticPaths, Page } from "astro";
+import { localizePath } from "astro-i18next";
+
+import TopicNavigation from "@/components/topic-navigation.astro";
+import ArticleItem from "@/components/article-item.astro";
+import Pagination from "@/components/pagination.astro";
+
+changeLanguage("en");
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const topics = await getCollection("topics", ({ id }) => {
+    return id.startsWith(`${i18next.language}/`);
+  });
+
+  const posts = await getCollection("blog", ({ id, data }) => {
+    return id.startsWith(`${i18next.language}/`);
+  });
+
+  return topics.map((topic) => {
+    const slug = topic.slug.split("/")[1];
+    const filteredPosts = posts.filter((post) =>
+      post.data.topics.includes(slug)
+    );
+    return paginate(filteredPosts, {
+      params: { topic: slug },
+      props: { topic },
+      pageSize: 2,
+    });
+  });
+};
+
+export type Props = {
+  page: Page<CollectionEntry<"blog">>;
+  topic: CollectionEntry<"topics">;
+};
+
+const { page, topic } = Astro.props;
+const { topic: current } = Astro.params;
+const { Content } = await topic.render();
+---
+
+<Base>
+  <main class="max-w-7xl mx-auto mb-12">
+    <h1 class="pt-6 mb-2 text-2xl">{topic.data.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
+
+    <TopicNavigation current={current} />
+
+    <section class="grid gap-4">
+      <div class="mt-8 grid grid-flow-dense grid-cols-1 gap-8">
+        <ArticleItem posts={page.data} />
+      </div>
+      <Pagination page={page} />
+    </section>
+  </main>
+</Base>

@@ -1,5 +1,9 @@
 {
   "nav": {
+    "home": {
+      "title": "Home",
+      "body": "Learn how Astro works and explore the docs."
+    },
     "blog": {
       "title": "Blog",
       "body": "Learn how Astro works and explore the docs."
@@ -12,5 +16,10 @@
       "title": "About",
       "body": "Supercharge your projects with new frameworks and libraries."
     }
+  },
+  "section": {
+    "blog": "Latest Article",
+    "snippet": "Snippets",
+    "about": "About"
   }
 }

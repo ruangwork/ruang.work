@@ -1,0 +1,51 @@
+---
+import i18next, { changeLanguage } from "i18next";
+
+import { localizePath } from "astro-i18next";
+import { getCollection } from "astro:content";
+import { t } from "i18next";
+
+changeLanguage("en");
+
+const posts = await getCollection("blog", ({ id }) => {
+    return id.startsWith(`${i18next.language}/`);
+});
+---
+
+<main class="max-w-7xl mx-auto mb-12">
+    <header class="py-6 text-2xl">Ruang Work</header>
+    <span>
+        follow
+        <ul class="inline-flex">
+            {
+                Array.from({ length: 5 }).map((_, i) => (
+                    <li class="w-6 h-6 rounded-full border-2 border-black items-center flex justify-center">
+                        {i + 1}
+                    </li>
+                ))
+            }
+        </ul>
+    </span>
+    <h2 class="pt-6 pb-4 font-medium text-2xl">Latest Post</h2>
+    <section class="grid gap-4">
+        {
+            posts.length !== 0 &&
+                posts.map((post) => (
+                    <a href={localizePath(`${post.slug}`)}>
+                        {post.slug}
+                        <br />
+                        {post.data.title}
+                    </a>
+                ))
+        }
+    </section>
+    <h2 class="pt-6 pb-4 font-medium text-2xl">Latest Shorts</h2>
+    <section class="inline-flex gap-4">
+        {
+            posts.length !== 0 &&
+                posts.map((post) => (
+                    <div class="aspect-[9/16] bg-red-200 w-32">o</div>
+                ))
+        }
+    </section>
+</main>

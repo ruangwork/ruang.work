@@ -1,0 +1,42 @@
+---
+import i18next, { changeLanguage } from "i18next";
+import Base from "@/layouts/base.astro";
+import { CollectionEntry, getCollection } from "astro:content";
+import type { GetStaticPaths, Page } from "astro";
+
+import TopicNavigation from "@/components/topic-navigation.astro";
+import ArticleItem from "@/components/article-item.astro";
+import Pagination from "@/components/pagination.astro";
+
+changeLanguage("en");
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const posts = await getCollection("blog", ({ id }) => {
+    return id.startsWith(`${i18next.language}/`);
+  });
+
+  return paginate(posts, {
+    pageSize: 2,
+  });
+};
+
+export type Props = {
+  page: Page<CollectionEntry<"blog">>;
+};
+
+const { page } = Astro.props;
+---
+
+<Base>
+  <main class="max-w-7xl mx-auto mb-12">
+    <header class="py-6 text-2xl">Blog</header>
+    <TopicNavigation />
+
+    <section class="grid gap-4">
+      <div class="mt-8 grid grid-flow-dense grid-cols-1 gap-8">
+        <ArticleItem posts={page.data} />
+      </div>
+    </section>
+    <Pagination page={page} />
+  </main>
+</Base>

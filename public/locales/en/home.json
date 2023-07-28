@@ -1,5 +1,10 @@
 {
   "title": "Welcome to Astro.",
   "welcome": "Welcome to <0>Astro</0>",
-  "instructions": "Checkout the <0>src/pages</0> directory to get started.<1><2>Code Challenge:</2> Translate this page with your language of choice."
+  "instructions": "Checkout the <0>src/pages</0> directory to get started.<1><2>Code Challenge:</2> Translate this page with your language of choice.",
+
+  "welcoming": {
+    "greeting": "Share to Learn",
+    "about": "<0>This site was created as a platform to share guides, tips, knowledge, and experiences about programming.</0> <1>It is hoped that the articles written here can be useful for others and become a personal journals during programming.</1>"
+  }
 }

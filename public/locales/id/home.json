@@ -1,0 +1,9 @@
+{
+  "title": "Selamat datang di Astro.",
+  "welcome": "Selamat datang di <0>Astro</0>",
+
+  "welcoming": {
+    "greeting": "Berbagi untuk Belajar",
+    "about": "<0>Situs ini dibuat sebagai wadah untuk berbagi panduan, tips, pengetahuan, dan pengalaman mengenai pemrograman</0> <1>Diharapkan artikel-artikel yang ditulis di sini dapat bermanfaat bagi orang lain dan menjadi jurnal pribadi selama belajar pemrograman</1>"
+  }
+}

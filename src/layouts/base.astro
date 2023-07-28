@@ -4,6 +4,7 @@ import { HeadHrefLangs } from "astro-i18next/components";
 import { LanguageSelector } from "astro-i18next/components";
 
 import Navbar from "@/components/navbar.astro";
+import Footer from "@/components/footer.astro";
 ---
 
 <html lang={i18next.language}>
@@ -21,13 +22,6 @@ import Navbar from "@/components/navbar.astro";
     </main>
     <LanguageSelector showFlag={true} />
 
-    <footer class="mt-12 mb-6">
-      <p>
-        Semua kode dalam situs dilisensikan dibawah MIT License kecuali
-        dinyatakan sebaliknya
-      </p>
-      <hr class="my-6" />
-      <p>© ruang.work 2023 - {new Date().getFullYear()}</p>
-    </footer>
+    <Footer />
   </body>
 </html>

@@ -1,0 +1,25 @@
+{
+  "nav": {
+    "home": {
+      "title": "Beranda",
+      "body": "Selamat datang di halaman beranda kami! Temukan berbagai konten menarik, termasuk artikel terbaru, cuplikan kode, dan informasi tentang kami."
+    },
+    "blog": {
+      "title": "Blog",
+      "body": "Temukan pemikiran, ide, dan pengetahuan terbaru tentang berbagai topik menarik di halaman blog kami."
+    },
+    "snippet": {
+      "title": "Snippets",
+      "body": "Temukan kumpulan cuplikan kode dan trik pemrograman yang berguna di halaman Snippets."
+    },
+    "about": {
+      "title": "Tentang",
+      "body": "Pelajari lebih lanjut tentang kami dan visi kami di halaman About."
+    }
+  },
+  "section": {
+    "blog": "Artikel Terbaru",
+    "snippet": "Snippets",
+    "about": "Tentang"
+  }
+}

@@ -12,13 +12,13 @@ const blog = defineCollection({
   }),
 });
 
-const topic = defineCollection({
+const topics = defineCollection({
   schema: z.object({
     title: z.string(),
   }),
 });
 
-const snippet = defineCollection({
+const snippets = defineCollection({
   schema: z.object({
     title: z.string(),
     author: z.string(),
@@ -31,9 +31,6 @@ const author = defineCollection({
     z.object({
       firstname: z.string(),
       lastname: z.string(),
-      avatar: image().refine((img) => img.width >= 96, {
-        message: "Author avatar image must be at least 96 pixels wide!",
-      }),
       // socials
       twitter: z.string().optional(),
       github: z.string().optional(),
@@ -41,4 +38,4 @@ const author = defineCollection({
     }),
 });
 
-export const collections = { author, blog, snippet, topic };
+export const collections = { author, blog, snippets, topics };

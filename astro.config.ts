@@ -11,8 +11,13 @@ import image from "@astrojs/image";
 import { toString } from "mdast-util-to-string";
 import remarkExpressiveCode from "remark-expressive-code";
 
+import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
+  experimental: {
+    assets: true,
+  },
   integrations: [
     astroI18next(),
     tailwind(),
@@ -36,5 +41,6 @@ export default defineConfig({
         ],
       ],
     }),
+    react(),
   ],
 });

@@ -7,14 +7,16 @@ import { getCollection } from "astro:content";
 import Ads from "@/components/mdx/ads.astro";
 import TOC from "@/components/mdx/toc.astro";
 
-export async function getStaticPaths() {
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths: GetStaticPaths = async () => {
   const pages = await getCollection("blog");
   const paths = pages.map((page) => {
     const [lang, ...slug] = page.slug.split("/");
     return { params: { lang, slug: slug.join("/") || undefined }, props: page };
   });
   return paths;
-}
+};
 
 const { lang } = Astro.params;
 
@@ -31,7 +33,7 @@ const { Content, remarkPluginFrontmatter, headings } = await page.render();
     <article class="prose col-span-2">
       <h1>{page.data.title}</h1>
       <h5>{remarkPluginFrontmatter.minutesRead}</h5>
-      <p>by {page.data.author} • {formattedDate}</p>
+      <p>by {page.data.authors.at(0)} • {formattedDate}</p>
       <Content components={{ Ads }} />
     </article>
     <aside class="max-lg:hidden">

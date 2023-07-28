@@ -2,7 +2,43 @@
 
 ```
 npm create astro@latest -- --template minimal
+
 ```
+
+[fazzaamiarso](https://github.com/fazzaamiarso/fazzaamiarso.me-v2)
+
+[engineering blog](https://github.com/EddyVinck/astro-engineering-blog)
+[] Easy configuration
+[x] Minimal styling (make it your own!)
+[] 100/100 Lighthouse performance
+[] SEO-friendly with canonical URLs and OpenGraph data
+[] Uses astro:assets for optimized images
+[] Sitemap support
+[] RSS Feed support
+[x] Markdown & MDX support
+[] Search functionality
+[x] Author system
+[x] Multiple authors per post (co-authoring)
+[x] Topics
+[x] Blog pagination
+[] Blog drafts
+
+[accessible-astro-starter](https://github.com/markteekman/accessible-astro-starter)
+[] Tailwind CSS support
+[] Prettier integration with `prettier-plugin-astro` and `prettier-plugin-tailwind`
+[] Semantic Tag
+[] Several aria attributes which provide a better experience for screen reader users
+[] Navigation.astro component with keyboard accessible (dropdown) navigation (arrow keys, escape key)
+[] ResponsiveToggle.astro component with an accessible responsive toggle button for the mobile navigation
+[] DarkMode.astro component toggle with accessible button and a user system preferred color scheme setting
+[] SiteMeta.astro SEO component for setting custom meta data on different pages
+[] Ships with many components such as Accordions, Breadcrumbs, Modals, Pagination and many more
+
+Utility pages
+[] Terms
+[] Privacy
+[] FAQ
+[] 404
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
 [![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)

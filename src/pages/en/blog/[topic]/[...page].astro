@@ -3,7 +3,6 @@ import i18next, { changeLanguage } from "i18next";
 import Base from "@/layouts/base.astro";
 import { CollectionEntry, getCollection } from "astro:content";
 import type { GetStaticPaths, Page } from "astro";
-import { localizePath } from "astro-i18next";
 
 import TopicNavigation from "@/components/topic-navigation.astro";
 import ArticleItem from "@/components/article-item.astro";
@@ -16,7 +15,7 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
     return id.startsWith(`${i18next.language}/`);
   });
 
-  const posts = await getCollection("blog", ({ id, data }) => {
+  const posts = await getCollection("blog", ({ id }) => {
     return id.startsWith(`${i18next.language}/`);
   });
 

@@ -33,7 +33,9 @@ const snippets = await getCollection("snippets", ({ id }) => {
               <br />
               {post.render().then(({ remarkPluginFrontmatter }) => {
                 return (
-                  <Fragment set:html={remarkPluginFrontmatter.code.value} />
+                  remarkPluginFrontmatter.code && (
+                    <Fragment set:html={remarkPluginFrontmatter?.code.value} />
+                  )
                 );
               })}
             </article>

@@ -1,7 +1,6 @@
 ---
 import i18next from "i18next";
 import { HeadHrefLangs } from "astro-i18next/components";
-import { LanguageSelector } from "astro-i18next/components";
 
 import Navbar from "@/components/navbar.astro";
 import Footer from "@/components/footer.astro";
@@ -20,7 +19,6 @@ import Footer from "@/components/footer.astro";
     <main>
       <slot />
     </main>
-    <LanguageSelector showFlag={true} />
 
     <Footer />
   </body>

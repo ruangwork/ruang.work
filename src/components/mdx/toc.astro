@@ -1,101 +1,95 @@
 ---
-import { cn } from "@/lib/utils/cn";
+import { cn } from '@/lib/utils/cn'
 
 export type Props = {
-  headings: Array<{ depth: number; text: string; slug: string }>;
-};
-const { headings } = Astro.props;
+	headings: Array<{ depth: number; text: string; slug: string }>
+}
+const { headings } = Astro.props
 ---
 
 <nav id="toc">
-  <button
-    type="button"
-    class="w-full text-left font-medium uppercase tracking-widest border-2 border-black py-2 px-2"
-  >
-    Table of content
-  </button>
-  <div
-    id="wrapper"
-    class="transition-all"
-    style="height: 0;visibility: hidden;"
-  >
-    <ul class="text-sm close" id="toc__inner">
-      {
-        headings.map((h) => {
-          return (
-            h.depth < 4 && (
-              <li
-                class={cn(
-                  "text-zinc-600 hover:text-zinc-500 ",
-                  h.depth === 2 && "text-[15px] ",
-                  h.depth === 3 && "ml-4 text-[14px]"
-                )}
-              >
-                <a href={`#${h.slug}`} class="line-clamp-1">
-                  {h.text}
-                </a>
-              </li>
-            )
-          );
-        })
-      }
-    </ul>
-  </div>
+	<button
+		type="button"
+		class="w-full text-left font-medium uppercase tracking-widest border-2 border-black py-2 px-2">
+		Table of content
+	</button>
+	<div id="wrapper" class="transition-all" style="height: 0;visibility: hidden;">
+		<ul class="text-sm close" id="toc__inner">
+			{
+				headings.map((h) => {
+					return (
+						h.depth < 4 && (
+							<li
+								class={cn(
+									'text-zinc-600 hover:text-zinc-500 ',
+									h.depth === 2 && 'text-[15px] ',
+									h.depth === 3 && 'ml-4 text-[14px]'
+								)}>
+								<a href={`#${h.slug}`} class="line-clamp-1">
+									{h.text}
+								</a>
+							</li>
+						)
+					)
+				})
+			}
+		</ul>
+	</div>
 </nav>
 
 <style>
-  .active {
-    @apply text-red-400;
-  }
+	.active {
+		@apply text-red-400;
+	}
 
-  .close {
-    @apply hidden;
-  }
+	.close {
+		@apply hidden;
+	}
 </style>
 
 <script>
-  const trigger = document.querySelector("nav>button");
+	const trigger = document.querySelector('nav>button')
 
-  trigger?.addEventListener("click", function () {
-    const tocInner = document.querySelector("#toc__inner");
-    const wrapper = document.querySelector("#wrapper");
-    if (tocInner && wrapper) {
-      if (tocInner.classList.contains("close")) {
-        tocInner.classList.remove("close");
-        wrapper.style.visibility = "visible";
-        wrapper.style.height = `${tocInner.getBoundingClientRect().height}px`;
-        return;
-      }
-      tocInner.classList.add("close");
-      wrapper.style.height = 0;
-      wrapper.style.visibility = "hidden";
-    }
-  });
+	trigger?.addEventListener('click', function () {
+		const tocInner = document.querySelector('#toc__inner')
+		const wrapper = document.querySelector('#wrapper')
+		if (tocInner && wrapper) {
+			if (tocInner.classList.contains('close')) {
+				tocInner.classList.remove('close')
+				// @ts-ignore
+				wrapper.style.visibility = 'visible'
+				// @ts-ignore
+				wrapper.style.height = `${tocInner.getBoundingClientRect().height}px`
+				return
+			}
+			tocInner.classList.add('close')
+			// @ts-ignore
+			wrapper.style.height = 0
+			// @ts-ignore
+			wrapper.style.visibility = 'hidden'
+		}
+	})
 
-  const setCurrent: IntersectionObserverCallback = (entries) => {
-    for (let entry of entries) {
-      const { id } = entry.target;
+	const setCurrent: IntersectionObserverCallback = (entries) => {
+		for (let entry of entries) {
+			const { id } = entry.target
 
-      const tocHeadingEl = document.querySelector(`#toc a[href="#${id}"]`);
+			const tocHeadingEl = document.querySelector(`#toc a[href="#${id}"]`)
 
-      if (!tocHeadingEl) return;
+			if (!tocHeadingEl) return
 
-      if (entry.isIntersecting) {
-        document
-          .querySelectorAll("#toc a")
-          .forEach((e) => e.classList.remove("active"));
-        tocHeadingEl.classList.add("active");
-      }
-    }
-  };
+			if (entry.isIntersecting) {
+				document.querySelectorAll('#toc a').forEach((e) => e.classList.remove('active'))
+				tocHeadingEl.classList.add('active')
+			}
+		}
+	}
 
-  const observerOption: IntersectionObserverInit = {
-    rootMargin: " 0px 0px -72%",
-    threshold: 0.5,
-  };
-  const headingObserver = new IntersectionObserver(setCurrent, observerOption);
+	const observerOption: IntersectionObserverInit = {
+		rootMargin: ' 0px 0px -72%',
+		threshold: 0.5,
+	}
+	const headingObserver = new IntersectionObserver(setCurrent, observerOption)
 
-  document
-    .querySelectorAll("article :is(h2,h3,h4)")
-    .forEach((heading) => headingObserver.observe(heading));
+	document.querySelectorAll('article :is(h2,h3,h4)').forEach((heading) => headingObserver.observe(heading))
 </script>

@@ -13,8 +13,8 @@ npm create astro@latest -- --template minimal
 [] 100/100 Lighthouse performance
 [] SEO-friendly with canonical URLs and OpenGraph data
 [] Uses astro:assets for optimized images
-[] Sitemap support
-[] RSS Feed support
+[x] Sitemap support
+[x] RSS Feed support
 [x] Markdown & MDX support
 [] Search functionality
 [x] Author system
@@ -24,7 +24,7 @@ npm create astro@latest -- --template minimal
 [] Blog drafts
 
 [accessible-astro-starter](https://github.com/markteekman/accessible-astro-starter)
-[] Tailwind CSS support
+[x] Tailwind CSS support
 [] Prettier integration with `prettier-plugin-astro` and `prettier-plugin-tailwind`
 [] Semantic Tag
 [] Several aria attributes which provide a better experience for screen reader users

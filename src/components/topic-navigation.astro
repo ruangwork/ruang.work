@@ -1,51 +1,44 @@
 ---
-import { getCollection } from "astro:content";
-import i18next from "i18next";
-import { cn } from "@/lib/utils/cn";
-import { localizePath } from "astro-i18next";
+import { localizePath } from 'astro-i18next'
+import { getCollection } from 'astro:content'
+import i18next from 'i18next'
+
+import { cn } from '@/lib/utils/cn'
 
 interface Props {
-  current?: string;
+	current?: string
 }
 
-const { current = "all" } = Astro.props;
+const { current = 'all' } = Astro.props
 
-const topics = await getCollection("topics", ({ id }) => {
-  return id.startsWith(`${i18next.language}/`);
-});
+const topics = await getCollection('topics', ({ id }) => {
+	return id.startsWith(`${i18next.language}/`)
+})
 ---
 
 <nav class="flex flex-wrap gap-2 py-2">
-  <a
-    href={localizePath("/blog")}
-    class={cn(
-      "inline-flex items-center border px-2.5 py-0.5 text-xs",
-      current === "all" ? "bg-slate-700 text-white" : ""
-    )}
-  >
-    All
-  </a>
-  {
-    topics.map((topic) => {
-      return (
-        <a
-          href={localizePath(
-            `${topic.slug
-              .split("/")
-              .slice(0, 1)
-              .concat("blog", topic.slug.split("/").slice(1))
-              .join("/")}`
-          )}
-          class={cn(
-            "inline-flex items-center border px-2.5 py-0.5 text-xs",
-            current === topic.slug.split("/")[1]
-              ? "bg-slate-700 text-white"
-              : ""
-          )}
-        >
-          {topic.data.title}
-        </a>
-      );
-    })
-  }
+	<a
+		href={localizePath('/blog')}
+		class={cn(
+			'inline-flex items-center border px-2.5 py-0.5 text-xs',
+			current === 'all' ? 'bg-slate-700 text-white' : ''
+		)}>
+		All
+	</a>
+	{
+		topics.map((topic) => {
+			return (
+				<a
+					href={localizePath(
+						`${topic.slug.split('/').slice(0, 1).concat('blog', topic.slug.split('/').slice(1)).join('/')}`
+					)}
+					class={cn(
+						'inline-flex items-center border px-2.5 py-0.5 text-xs',
+						current === topic.slug.split('/')[1] ? 'bg-slate-700 text-white' : ''
+					)}>
+					{topic.data.title}
+				</a>
+			)
+		})
+	}
 </nav>

@@ -1,9 +1,9 @@
 ---
-import i18next, { changeLanguage, t } from "i18next";
 import Base from "@/layouts/base.astro";
 import { localizePath } from "astro-i18next";
-import { getCollection } from "astro:content";
 import { Trans } from "astro-i18next/components";
+import { getCollection } from "astro:content";
+import i18next, { changeLanguage, t } from "i18next";
 
 import ArticleItem from "@/components/article-item.astro";
 
@@ -20,7 +20,7 @@ const snippets = await getCollection("snippets", ({ id }) => {
 
 <Base>
   <main>
-    <section class="bg-slate-200 -mx-4 py-6 px-4 prose">
+    <section class="-mx-4 bg-slate-200 py-6 px-4 prose">
       <h1 class="font-bold text-2xl mb-4">{t("home:welcoming.greeting")}</h1>
       <Trans i18nKey="welcoming.about" ns="home">
         <p>

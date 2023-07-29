@@ -1,46 +1,45 @@
 ---
-import i18next, { changeLanguage, t } from "i18next";
-import Base from "@/layouts/base.astro";
-import { getCollection } from "astro:content";
-import { localizePath } from "astro-i18next";
+import Base from '@/layouts/base.astro'
+import { localizePath } from 'astro-i18next'
+import { getCollection } from 'astro:content'
+import i18next, { changeLanguage, t } from 'i18next'
 
-changeLanguage("en");
+changeLanguage('en')
 
-const snippets = await getCollection("snippets", ({ id }) => {
-  return id.startsWith(`${i18next.language}/`);
-});
+const snippets = await getCollection('snippets', ({ id }) => {
+	return id.startsWith(`${i18next.language}/`)
+})
 ---
 
 <Base>
-  <main class="prose">
-    <h1>{t("snippets:greeting")}</h1>
-    <section>
-      {
-        snippets.length !== 0 &&
-          snippets.map((post) => (
-            <article>
-              <a
-                href={localizePath(
-                  `${post.slug
-                    .split("/")
-                    .slice(0, 1)
-                    .concat("s", post.slug.split("/").slice(1))
-                    .join("/")}`
-                )}
-              >
-                {post.data.title}
-              </a>
-              <br />
-              {post.render().then(({ remarkPluginFrontmatter }) => {
-                return (
-                  remarkPluginFrontmatter.code && (
-                    <Fragment set:html={remarkPluginFrontmatter?.code.value} />
-                  )
-                );
-              })}
-            </article>
-          ))
-      }
-    </section>
-  </main>
+	<main class="prose">
+		<h1>{t('snippets:greeting')}</h1>
+		<section>
+			{
+				snippets.length !== 0 &&
+					snippets.map((post) => (
+						<article>
+							<a
+								href={localizePath(
+									`${post.slug
+										.split('/')
+										.slice(0, 1)
+										.concat('s', post.slug.split('/').slice(1))
+										.join('/')}`
+								)}>
+								{post.data.title}
+							</a>
+							<br />
+							{post.render().then(({ remarkPluginFrontmatter }) => {
+								return (
+									remarkPluginFrontmatter.code && (
+										<Fragment set:html={remarkPluginFrontmatter?.code.value} />
+									)
+								)
+							})}
+						</article>
+					))
+			}
+		</section>
+	</main>
 </Base>

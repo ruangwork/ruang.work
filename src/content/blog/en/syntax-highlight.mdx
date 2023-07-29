@@ -1,14 +1,14 @@
 ---
-title: "Syntax Highlight"
+title: 'Syntax Highlight'
 date: 2023-05-24
 authors:
-  - inurhuda00
-desc: "highlighter that provides beautiful code"
-topics: ["docs"]
+    - inurhuda00
+desc: 'highlighter that provides beautiful code'
+topics: ['docs']
 tags:
-  - rehype
-  - pretty
-  - code
+    - rehype
+    - pretty
+    - code
 ---
 
 [Rehype Pretty Code](https://github.com/atomiks/rehype-pretty-code) is a Rehype
@@ -26,14 +26,14 @@ and the line range 2-4 will be marked:
 ```js title="example.js" {2-4}
 // Example function
 function add(a, b) {
-  return a + b;
+	return a + b
 }
 
-console.log(add(1, 2));
+console.log(add(1, 2))
 ```
 
 ```js title="my-test-file.js"
-console.log("Hello World!");
+console.log('Hello World!')
 ```
 
 ## Perfect syntax highlighting
@@ -42,26 +42,26 @@ Leverage the accuracy of VS Code's syntax highlighting engine and the popularity
 of its themes ecosystem — use any VS Code theme you want!
 
 ```js
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 
 // 🔥 Super granular and accurate highlighting
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
-  }
+	static async getInitialProps(ctx) {
+		const initialProps = await Document.getInitialProps(ctx)
+		return { ...initialProps }
+	}
 
-  render() {
-    return (
-      <Html>
-        <Head />
-        <body className="bg-zinc-800 text-zinc-200">
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    );
-  }
+	render() {
+		return (
+			<Html>
+				<Head />
+				<body className="bg-zinc-800 text-zinc-200">
+					<Main />
+					<NextScript />
+				</body>
+			</Html>
+		)
+	}
 }
 ```
 
@@ -71,34 +71,34 @@ export default class MyDocument extends Document {
 ## Line numbers and line highlighting are supported
 
 ```js {4}
-import { useFloating } from "@floating-ui/react";
+import { useFloating } from '@floating-ui/react'
 
 function MyComponent() {
-  const { refs, floatingStyles } = useFloating();
+	const { refs, floatingStyles } = useFloating()
 
-  return (
-    <>
-      <div ref={refs.setReference} />
-      <div ref={refs.setFloating} style={floatingStyles} />
-    </>
-  );
+	return (
+		<>
+			<div ref={refs.setReference} />
+			<div ref={refs.setFloating} style={floatingStyles} />
+		</>
+	)
 }
 ```
 
 ## Word highlighting
 
 ```js /floatingStyles/
-import { useFloating } from "@floating-ui/react";
+import { useFloating } from '@floating-ui/react'
 
 function MyComponent() {
-  const { refs, floatingStyles } = useFloating();
+	const { refs, floatingStyles } = useFloating()
 
-  return (
-    <>
-      <div ref={refs.setReference} />
-      <div ref={refs.setFloating} style={floatingStyles} />
-    </>
-  );
+	return (
+		<>
+			<div ref={refs.setReference} />
+			<div ref={refs.setFloating} style={floatingStyles} />
+		</>
+	)
 }
 ```
 
@@ -112,7 +112,7 @@ For instance, if you had the following code block:
 
 ```js
 function getStringLength(str) {
-  return str.length;
+	return str.length
 }
 ```
 
@@ -148,28 +148,28 @@ npm install rehype-pretty-code shiki
 ## Usage
 
 ```js /rehypePrettyCode/
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkGfm from "remark-gfm";
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
-import rehypePrettyCode from "rehype-pretty-code";
+import rehypePrettyCode from 'rehype-pretty-code'
+import rehypeStringify from 'rehype-stringify'
+import remarkGfm from 'remark-gfm'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+import { unified } from 'unified'
 
 async function main() {
-  const file = await unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypePrettyCode, {
-      // See Options section below.
-    })
-    .use(rehypeStringify)
-    .process("`const numbers = [1, 2, 3]{:js}`");
+	const file = await unified()
+		.use(remarkParse)
+		.use(remarkGfm)
+		.use(remarkRehype)
+		.use(rehypePrettyCode, {
+			// See Options section below.
+		})
+		.use(rehypeStringify)
+		.process('`const numbers = [1, 2, 3]{:js}`')
 
-  console.log(String(file));
+	console.log(String(file))
 }
 
-main();
+main()
 ```
 
 ### MDX
@@ -177,21 +177,21 @@ main();
 The following example shows how to use this package with Next.js.
 
 ```js
-const rehypePrettyCode = require("rehype-pretty-code");
-const fs = require("fs");
+const rehypePrettyCode = require('rehype-pretty-code')
+const fs = require('fs')
 
 /** @type {import('rehype-pretty-code').Options} */
 const options = {
-  // See Options section below.
-};
+	// See Options section below.
+}
 
-const withMDX = require("@next/mdx")({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [],
-    rehypePlugins: [[rehypePrettyCode, options]],
-  },
-});
+const withMDX = require('@next/mdx')({
+	extension: /\.mdx?$/,
+	options: {
+		remarkPlugins: [],
+		rehypePlugins: [[rehypePrettyCode, options]],
+	},
+})
 ```
 
 > **Make sure you have disabled** the `mdxRs{:.meta.object-literal.key}` option
@@ -208,7 +208,7 @@ grid style, so ensure the following style is present:
 
 ```css
 pre > code {
-  display: grid;
+	display: grid;
 }
 ```
 
@@ -219,8 +219,8 @@ You can disable this setting if necessary:
 
 ```js
 const options = {
-  grid: false,
-};
+	grid: false,
+}
 ```
 
 ### Theme
@@ -231,8 +231,8 @@ be specified as a plain string:
 
 ```js
 const options = {
-  theme: "one-dark-pro",
-};
+	theme: 'one-dark-pro',
+}
 ```
 
 But you can use your own theme as well by passing the theme JSON:
@@ -240,19 +240,15 @@ But you can use your own theme as well by passing the theme JSON:
 ```js
 // ESM
 const options = {
-  theme: JSON.parse(
-    readFileSync(new URL("./themes/theme.json", import.meta.url))
-  ),
-};
+	theme: JSON.parse(readFileSync(new URL('./themes/theme.json', import.meta.url))),
+}
 ```
 
 ```js
 // CJS
 const options = {
-  theme: JSON.parse(
-    fs.readFileSync(require.resolve("./themes/dark.json"), "utf-8")
-  ),
-};
+	theme: JSON.parse(fs.readFileSync(require.resolve('./themes/dark.json'), 'utf-8')),
+}
 ```
 
 #### Theme background
@@ -261,8 +257,8 @@ To apply a custom background instead of inheriting the background from theme:
 
 ```js
 const options = {
-  keepBackground: false,
-};
+	keepBackground: false,
+}
 ```
 
 ### Meta strings
@@ -326,14 +322,14 @@ differently based on their id.
 
 ````md
 ```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /'Taylor'/#i
-const [age, setAge] = useState(50);
-const [name, setName] = useState("Taylor");
+const [age, setAge] = useState(50)
+const [name, setName] = useState('Taylor')
 ```
 ````
 
 ```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /'Taylor'/#i
-const [age, setAge] = useState(50);
-const [name, setName] = useState("Taylor");
+const [age, setAge] = useState(50)
+const [name, setName] = useState('Taylor')
 ```
 
 The chars `<span>{:html}` receives a `data-chars-id="<id>"` attribute to style
@@ -362,10 +358,10 @@ You can create a map of tokens to shorten this usage throughout your docs:
 
 ```js
 const options = {
-  tokensMap: {
-    fn: "entity.name.function",
-  },
-};
+	tokensMap: {
+		fn: 'entity.name.function',
+	},
+}
 ```
 
 ```md
@@ -398,27 +394,27 @@ CSS counters can be used to add line numbers.
 
 ```css
 code {
-  counter-reset: line;
+	counter-reset: line;
 }
 
 code > [data-line]::before {
-  counter-increment: line;
-  content: counter(line);
+	counter-increment: line;
+	content: counter(line);
 
-  /* Other styling */
-  display: inline-block;
-  width: 1rem;
-  margin-right: 2rem;
-  text-align: right;
-  color: gray;
+	/* Other styling */
+	display: inline-block;
+	width: 1rem;
+	margin-right: 2rem;
+	text-align: right;
+	color: gray;
 }
 
-code[data-line-numbers-max-digits="2"] > [data-line]::before {
-  width: 2rem;
+code[data-line-numbers-max-digits='2'] > [data-line]::before {
+	width: 2rem;
 }
 
-code[data-line-numbers-max-digits="3"] > [data-line]::before {
-  width: 3rem;
+code[data-line-numbers-max-digits='3'] > [data-line]::before {
+	width: 3rem;
 }
 ```
 
@@ -455,11 +451,11 @@ the color mode:
 
 ```js
 const options = {
-  theme: {
-    dark: "github-dark-dimmed",
-    light: "github-light",
-  },
-};
+	theme: {
+		dark: 'github-dark-dimmed',
+		light: 'github-light',
+	},
+}
 ```
 
 The `<code>{:html}` and `<pre>{:html}` elements will have the data attribute
@@ -469,17 +465,17 @@ Now, you can use CSS to display the desired theme:
 
 ```css
 @media (prefers-color-scheme: dark) {
-  pre[data-theme="light"],
-  code[data-theme="light"] {
-    display: none;
-  }
+	pre[data-theme='light'],
+	code[data-theme='light'] {
+		display: none;
+	}
 }
 
 @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
-  pre[data-theme="dark"],
-  code[data-theme="dark"] {
-    display: none;
-  }
+	pre[data-theme='dark'],
+	code[data-theme='dark'] {
+		display: none;
+	}
 }
 ```
 
@@ -490,22 +486,22 @@ the [hAST elements](https://github.com/syntax-tree/hast#element) directly:
 
 ```js
 const options = {
-  onVisitLine(element) {
-    console.log("Visited line");
-  },
-  onVisitHighlightedLine(element) {
-    console.log("Visited highlighted line");
-  },
-  onVisitHighlightedChars(element) {
-    console.log("Visited highlighted chars");
-  },
-  onVisitTitle(element) {
-    console.log("Visited title");
-  },
-  onVisitCaption(element) {
-    console.log("Visited caption");
-  },
-};
+	onVisitLine(element) {
+		console.log('Visited line')
+	},
+	onVisitHighlightedLine(element) {
+		console.log('Visited highlighted line')
+	},
+	onVisitHighlightedChars(element) {
+		console.log('Visited highlighted chars')
+	},
+	onVisitTitle(element) {
+		console.log('Visited title')
+	},
+	onVisitCaption(element) {
+		console.log('Visited caption')
+	},
+}
 ```
 
 ### Custom highlighter
@@ -523,22 +519,22 @@ This is helpful if you'd like to configure other Shiki options, such as
 `langs{:.meta.object-literal.key}`.
 
 ```js
-const { getHighlighter, BUNDLED_LANGUAGES } = require("shiki");
+const { getHighlighter, BUNDLED_LANGUAGES } = require('shiki')
 
 const options = {
-  getHighlighter: (options) =>
-    getHighlighter({
-      ...options,
-      langs: [
-        ...BUNDLED_LANGUAGES,
-        {
-          id: "groq",
-          scopeName: "source.groq",
-          path: "./langs/vscode-sanity/grammars/groq.json",
-        },
-      ],
-    }),
-};
+	getHighlighter: (options) =>
+		getHighlighter({
+			...options,
+			langs: [
+				...BUNDLED_LANGUAGES,
+				{
+					id: 'groq',
+					scopeName: 'source.groq',
+					path: './langs/vscode-sanity/grammars/groq.json',
+				},
+			],
+		}),
+}
 ```
 
 ### Filter meta string
@@ -550,8 +546,8 @@ string before the library starts parsing it.
 
 ```js
 const options = {
-  filterMetaString: (string) => string.replace(/filename="[^"]*"/, ""),
-};
+	filterMetaString: (string) => string.replace(/filename="[^"]*"/, ''),
+}
 ```
 
 ## License

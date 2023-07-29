@@ -1,47 +1,44 @@
 ---
-import type { Page } from "astro";
+import type { Page } from 'astro'
 
-import ArrowLeft from "@/components/icons/arrow-left.astro";
-import ArrowRight from "@/components/icons/arrow-right.astro";
+import ArrowLeft from '@/components/icons/arrow-left.astro'
+import ArrowRight from '@/components/icons/arrow-right.astro'
 
 interface Props {
-  page: Page;
+	page: Page
 }
 
-const { page } = Astro.props;
+const { page } = Astro.props
 ---
 
 <footer class="grid grid-cols-3 mt-6">
-  {
-    page?.url.prev ? (
-      <a class="flex items-center gap-2 text-left" href={page?.url.prev}>
-        <ArrowLeft class="w-4 h-4" />
-        Previous
-      </a>
-    ) : (
-      <span />
-    )
-  }
-  {
-    page?.url.current ? (
-      <span class="text-center">
-        Page {page.currentPage} of {page.lastPage}
-      </span>
-    ) : (
-      <span />
-    )
-  }
-  {
-    page?.url.next ? (
-      <a
-        class="flex items-center justify-end gap-2 text-right"
-        href={page?.url.next}
-      >
-        Next
-        <ArrowRight class="w-4 h-4" />
-      </a>
-    ) : (
-      <span />
-    )
-  }
+	{
+		page?.url.prev ? (
+			<a class="flex items-center gap-2 text-left" href={page?.url.prev}>
+				<ArrowLeft class="w-4 h-4" />
+				Previous
+			</a>
+		) : (
+			<span />
+		)
+	}
+	{
+		page?.url.current ? (
+			<span class="text-center">
+				Page {page.currentPage} of {page.lastPage}
+			</span>
+		) : (
+			<span />
+		)
+	}
+	{
+		page?.url.next ? (
+			<a class="flex items-center justify-end gap-2 text-right" href={page?.url.next}>
+				Next
+				<ArrowRight class="w-4 h-4" />
+			</a>
+		) : (
+			<span />
+		)
+	}
 </footer>

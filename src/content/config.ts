@@ -29,8 +29,7 @@ const snippets = defineCollection({
 const author = defineCollection({
 	schema: ({ image }) =>
 		z.object({
-			firstname: z.string(),
-			lastname: z.string(),
+			name: z.string(),
 			// socials
 			twitter: z.string().optional(),
 			github: z.string().optional(),

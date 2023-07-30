@@ -1,4 +1,5 @@
 ---
+import { POSTS_PER_PAGE } from '@/constant'
 import Base from '@/layouts/base.astro'
 import type { GetStaticPaths, Page } from 'astro'
 import { CollectionEntry, getCollection } from 'astro:content'
@@ -16,7 +17,7 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 	})
 
 	return paginate(posts, {
-		pageSize: 2,
+		pageSize: POSTS_PER_PAGE,
 	})
 }
 

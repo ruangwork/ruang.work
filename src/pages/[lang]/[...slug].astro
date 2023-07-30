@@ -1,7 +1,7 @@
 ---
 import Base from '@/layouts/base.astro'
-import type { GetStaticPaths } from 'astro'
-import { getCollection } from 'astro:content'
+import type { GetStaticPaths, InferGetStaticParamsType, InferGetStaticPropsType, Page } from 'astro'
+import { CollectionEntry, getCollection } from 'astro:content'
 import { changeLanguage } from 'i18next'
 
 import Aside from '@/components/aside'
@@ -22,7 +22,10 @@ const { lang } = Astro.params
 
 changeLanguage(lang)
 
+type Props = CollectionEntry<'blog'>
+
 const page = Astro.props
+
 const formattedDate = page.data.date.toLocaleString(lang, {
 	weekday: 'long',
 	year: 'numeric',
@@ -33,9 +36,9 @@ const formattedDate = page.data.date.toLocaleString(lang, {
 const { Content, remarkPluginFrontmatter, headings } = await page.render()
 ---
 
-<Base>
+<Base title={page.data.title}>
 	<div class="grid grid-cols-1">
-		<article class="prose">
+		<article class="prose dark:prose-invert">
 			<h1>{page.data.title}</h1>
 			<h5>{remarkPluginFrontmatter.minutesRead}</h5>
 			<p>by {page.data.authors.at(0)} • {formattedDate}</p>

@@ -1,3 +1,12 @@
 {
-  "greeting": "Hallo"
+  "welcoming": {
+    "greeting": "About Site",
+    "about": "<0>Created as a medium for learning and sharing. This site was created as a medium to share guides, tips, knowledge, and experiences about programming.</0><1> The purpose of this blog was created to try to write basic things about software engineering to make me relearn the details that I might have missed. In addition, I also want to help fill the void of articles about basic computer science in Indonesian.<1>"
+  },
+
+  "section":{
+    "people":{
+      "title": "About the Authors"
+    }
+  }
 }

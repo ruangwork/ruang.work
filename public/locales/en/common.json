@@ -1,4 +1,8 @@
 {
+
+  "title": "Ruang Work | Share to learn, Collaborative space to manifest our existence",
+  "title_template" :   "%s | Ruang Work",
+  "description" :"This site was created as a place to share inspiration, tips, tricks, snippets, hobbies, something interesting in the scope of tech, entertainment, and stuff. such as programming, design, AI, cryptocurrency, books, movies, to product reviews. ",
   "nav": {
     "home": {
       "title": "Home",

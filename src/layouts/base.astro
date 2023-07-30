@@ -1,26 +1,66 @@
 ---
 import { HeadHrefLangs } from 'astro-i18next/components'
-import i18next from 'i18next'
+import i18next, { t } from 'i18next'
 
 import Footer from '@/components/footer.astro'
+import Meta from '@/components/meta.astro'
 import Navbar from '@/components/navbar.astro'
+
+interface Props {
+	title?: string
+	description?: string
+	image?: string
+}
+
+let { title, description } = Astro.props
+
+const props = {
+	title: title ? t('title_template').replace('%s', title) : t('title'),
+	description: description ? description : t('description'),
+}
 ---
 
 <html lang={i18next.language}>
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="msapplication-TileColor" content="#00aba9" />
+		<meta name="theme-color" content="#ffffff" />
 		<meta name="viewport" content="width=device-width" />
+
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=1" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=1" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=1" />
+		<link rel="manifest" href="/site.webmanifest?v=1" />
+		<link rel="shortcut icon" href="/favicon.ico?v=1" />
+
 		<HeadHrefLangs />
-		<title>Astro</title>
+		<Meta {...props} />
 	</head>
-	<body class="max-w-lg px-4 mx-auto">
+	<body class="max-w-lg px-4 mx-auto dark:bg-slate-900 dark:text-slate-50 transition-colors">
 		<Navbar />
 		<main>
 			<slot />
 		</main>
 
 		<Footer />
+		<script is:inline>
+			const theme = (() => {
+				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+					return localStorage.getItem('theme')
+				}
+				if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					return 'dark'
+				}
+				return 'light'
+			})()
+
+			if (theme === 'light') {
+				document.documentElement.classList.remove('dark')
+			} else {
+				document.documentElement.classList.add('dark')
+			}
+			window.localStorage.setItem('theme', theme)
+		</script>
 	</body>
 </html>

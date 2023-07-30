@@ -1,10 +1,60 @@
 ---
 import Base from '@/layouts/base.astro'
-import { changeLanguage, t } from 'i18next'
+import { Trans } from 'astro-i18next/components'
+import { getCollection } from 'astro:content'
+import i18next, { changeLanguage, t } from 'i18next'
 
 changeLanguage('en')
+
+const authors = await getCollection('author', ({ id }) => {
+	return id.startsWith(`${i18next.language}/`)
+})
 ---
 
 <Base>
-	<h1>{t('about:greeting')}</h1>
+	<section class="-mx-4 bg-slate-200 py-6 px-4 prose">
+		<h1 class="font-bold text-2xl mb-4">{t('about:welcoming.greeting')}</h1>
+		<Trans i18nKey="welcoming.about" ns="about">
+			<p>
+				dibuat sebagai media belajar dan berbagi. Situs ini dibuat sebagai media untuk berbagi mengenai panduan,
+				tips, ilmu, dan pengalaman tentang pemrograman.
+			</p>
+
+			<p>
+				Tujuan blog ini diciptakan adalah untuk mencoba menulis hal-hal dasar mengenai software engineering
+				membuat ku belajar kembali hal-hal detil yang mungkin terlewatkan. Selain itu, ingin juga ikut membantu
+				mengisi kekosongan artikel tentang dasar ilmu komputer berbahasa Indonesia.
+			</p>
+		</Trans>
+	</section>
+
+	<section>
+		<h1 class="py-6 text-2xl">{t('about:section.people.title')}</h1>
+		<div class="grid">
+			{authors.map((author) => <p class="font-bold">{author.slug.split('/').at(1)}</p>)}
+		</div>
+	</section>
+
+	<span class="flex gap-x-2">
+		[ <a href="https://facebook.com/feryandi">Facebook</a> ] [ <a href="https://twitter.com/feryandi">Twitter</a> ]
+		[ <a href="https://linkedin.com/in/feryandi">LinkedIn</a> ] [ <a href="https://github.com/feryandi">GitHub</a> ]
+		[ <a href="https://medium.com/@feryandi">Medium</a> ]
+	</span>
+
+	<section class="py-6">
+		<p>
+			<em
+				>Manusia pasti pernah salah. Jika terdapat kesalahan pada artikel silakan kontak penulis melalui media
+				sosial yang tertera di atas, atau melalui kolom komentar yang disediakan.</em
+			>
+		</p>
+
+		<p>
+			<em
+				>Semua yang tertulis disini adalah pendapat pribadi dan tidak berkaitan dengan pendapat
+				organisasi-organisasi yang disebut di atas. Opinions are my own and not the views of my employer or the
+				organizations affiliated with me.</em
+			>
+		</p>
+	</section>
 </Base>

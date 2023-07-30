@@ -32,7 +32,7 @@ const { Content, remarkPluginFrontmatter } = await page.render()
 
 <Base>
 	<div class="grid grid-cols-4 gap-x-8">
-		<article class="prose col-span-4">
+		<article class="prose dark:prose-invert col-span-4">
 			<h1>{page.data.title}</h1>
 			<h5>{remarkPluginFrontmatter.minutesRead}</h5>
 			<p>by {page.data.author} • {formattedDate}</p>

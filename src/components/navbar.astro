@@ -1,9 +1,10 @@
 ---
 import { localizePath } from 'astro-i18next'
-import { LanguageSelector } from 'astro-i18next/components'
 import i18next, { t } from 'i18next'
 
 import { cn } from '@/lib/utils/cn'
+import LanguageSelector from './lang-selector.astro'
+import ThemeToggle from './toggle-mode'
 
 const pathname = new URL(Astro.request.url).pathname
 	.split('/')
@@ -20,17 +21,18 @@ const current = pathname ? pathname : ''
 	</div>
 
 	<nav class="flex items-center gap-x-4">
-		<a class={cn(current === '' ? 'bg-yellow-300' : ' ')} href={localizePath()}>
+		<a class={cn(current === '' ? 'bg-cyan-400' : ' ')} href={localizePath()}>
 			{t('nav.home.title')}
 		</a>
-		<a class={cn(current === 'blog' ? 'bg-yellow-300' : ' ')} href={localizePath('blog')}>
+		<a class={cn(current === 'blog' ? 'bg-cyan-400' : ' ')} href={localizePath('blog')}>
 			{t('nav.blog.title')}
 		</a>
-		<a class={cn(current === 'snippets' ? 'bg-yellow-300' : ' ')} href={localizePath('snippets')}>
+		<a class={cn(current === 'snippets' ? 'bg-cyan-400' : ' ')} href={localizePath('snippets')}>
 			{t('nav.snippet.title')}
 		</a>
-		<a class={cn(current === 'about' ? 'bg-yellow-300' : ' ')} href={localizePath('about')}>
+		<a class={cn(current === 'about' ? 'bg-cyan-400' : ' ')} href={localizePath('about')}>
 			{t('nav.about.title')}
 		</a>
+		<ThemeToggle client:load />
 	</nav>
 </header>

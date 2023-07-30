@@ -1,70 +1,72 @@
 ---
-import Base from "@/layouts/base.astro";
-import { localizePath } from "astro-i18next";
-import { Trans } from "astro-i18next/components";
-import { getCollection } from "astro:content";
-import i18next, { changeLanguage, t } from "i18next";
+import Base from '@/layouts/base.astro'
+import { localizePath } from 'astro-i18next'
+import { Trans } from 'astro-i18next/components'
+import { getCollection } from 'astro:content'
+import i18next, { changeLanguage, t } from 'i18next'
 
-import ArticleItem from "@/components/article-item.astro";
+import ArticleItem from '@/components/article-item.astro'
+import TopicNavigation from '@/components/topic-navigation.astro'
 
-changeLanguage("en");
+changeLanguage('en')
 
-const posts = await getCollection("blog", ({ id }) => {
-  return id.startsWith(`${i18next.language}/`);
-});
+const posts = await getCollection('blog', ({ id }) => {
+	return id.startsWith(`${i18next.language}/`)
+})
 
-const snippets = await getCollection("snippets", ({ id }) => {
-  return id.startsWith(`${i18next.language}/`);
-});
+const snippets = await getCollection('snippets', ({ id }) => {
+	return id.startsWith(`${i18next.language}/`)
+})
 ---
 
 <Base>
-  <main>
-    <section class="-mx-4 bg-slate-200 py-6 px-4 prose">
-      <h1 class="font-bold text-2xl mb-4">{t("home:welcoming.greeting")}</h1>
-      <Trans i18nKey="welcoming.about" ns="home">
-        <p>
-          This site was created as a platform to share guides, tips, knowledge,
-          and experiences about programming.
-        </p>
-        <p>
-          It is hoped that the articles written here can be useful for others
-          and become a personal journals during programming.
-        </p>
-      </Trans>
-    </section>
-    <section>
-      <h2 class="py-6 text-2xl">{t("section.blog")}</h2>
-      <div class="grid gap-4">
-        <ArticleItem posts={posts} />
-      </div>
-    </section>
-    <section>
-      <h2 class="py-6 text-2xl">{t("section.snippet")}</h2>
+	<main>
+		<section class="-mx-4 bg-slate-200 py-6 px-4 prose">
+			<h1 class="font-bold text-2xl mb-4">{t('home:welcoming.greeting')}</h1>
+			<Trans i18nKey="welcoming.about" ns="home">
+				<p>
+					This site was created as a platform to share guides, tips, knowledge, and experiences about
+					programming.
+				</p>
+				<p>
+					It is hoped that the articles written here can be useful for others and become a personal journals
+					during programming.
+				</p>
+			</Trans>
+		</section>
 
-      {
-        snippets.length !== 0 &&
-          snippets.map((post) => (
-            <article class="space-y-2 mb-4">
-              <a
-                href={localizePath(
-                  `${post.slug
-                    .split("/")
-                    .slice(0, 1)
-                    .concat("s", post.slug.split("/").slice(1))
-                    .join("/")}`
-                )}
-              >
-                {post.data.title}
-              </a>
-              {post.render().then(({ remarkPluginFrontmatter }) => {
-                return (
-                  <Fragment set:html={remarkPluginFrontmatter.code.value} />
-                );
-              })}
-            </article>
-          ))
-      }
-    </section>
-  </main>
+		<TopicNavigation class:list="mt-6" />
+
+		<section>
+			<h2 class="py-6 text-2xl">{t('section.blog')}</h2>
+			<div class="grid gap-4">
+				<ArticleItem posts={posts} />
+			</div>
+		</section>
+
+		<section>
+			<h2 class="py-6 text-2xl">{t('section.snippet')}</h2>
+
+			{
+				snippets.length !== 0 &&
+					snippets.map((post) => (
+						<article class="space-y-2 mb-4">
+							<a
+								href={localizePath(
+									`${post.slug
+										.split('/')
+										.slice(0, 1)
+										.concat('s', post.slug.split('/').slice(1))
+										.join('/')}`
+								)}>
+								{post.data.title}
+							</a>
+							{post.render().then(({ remarkPluginFrontmatter }) => {
+								return <Fragment set:html={remarkPluginFrontmatter.code.value} />
+							})}
+						</article>
+					))
+			}
+		</section>
+	</main>
 </Base>

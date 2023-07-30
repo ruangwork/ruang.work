@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils/cn'
 
 interface Props {
 	current?: string
+	'class:list'?: string
 }
 
 const { current = 'all' } = Astro.props
@@ -16,12 +17,12 @@ const topics = await getCollection('topics', ({ id }) => {
 })
 ---
 
-<nav class="flex flex-wrap gap-2 py-2">
+<nav class={cn('flex flex-wrap gap-2 py-2', Astro.props['class:list'])}>
 	<a
 		href={localizePath('/blog')}
 		class={cn(
 			'inline-flex items-center border px-2.5 py-0.5 text-xs',
-			current === 'all' ? 'bg-slate-700 text-white' : ''
+			current === 'all' ? 'bg-slate-700 text-white dark:bg-slate-50 dark:text-slate-800' : ''
 		)}>
 		All
 	</a>
@@ -34,7 +35,9 @@ const topics = await getCollection('topics', ({ id }) => {
 					)}
 					class={cn(
 						'inline-flex items-center border px-2.5 py-0.5 text-xs',
-						current === topic.slug.split('/')[1] ? 'bg-slate-700 text-white' : ''
+						current === topic.slug.split('/')[1]
+							? 'bg-slate-700 text-white dark:bg-slate-50 dark:text-slate-800'
+							: ''
 					)}>
 					{topic.data.title}
 				</a>

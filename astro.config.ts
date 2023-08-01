@@ -16,7 +16,7 @@ import { remarkReadingTime } from './src/lib/remark/remark-reading-time'
 // https://astro.build/config
 export default defineConfig({
 	base: '/',
-	site: 'http://localhost:3000',
+	site: 'https://ruang.work',
 	experimental: {
 		assets: true,
 	},

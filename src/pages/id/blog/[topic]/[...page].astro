@@ -1,6 +1,7 @@
 ---
 import { POSTS_PER_PAGE } from '@/constant'
 import Base from '@/layouts/base.astro'
+import { getArticles } from '@/repository/blog'
 import type { GetStaticPaths, Page } from 'astro'
 import { CollectionEntry, getCollection } from 'astro:content'
 import i18next, { changeLanguage } from 'i18next'
@@ -16,9 +17,7 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 		return id.startsWith(`${i18next.language}/`)
 	})
 
-	const posts = await getCollection('blog', ({ id }) => {
-		return id.startsWith(`${i18next.language}/`)
-	})
+	const posts = await getArticles()
 
 	return topics.map((topic) => {
 		const slug = topic.slug.split('/')[1]

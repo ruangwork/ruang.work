@@ -1,0 +1,92 @@
+---
+title: 'Mengelompokkan Data Menggunakan Reduce pada Array Javascript'
+cover: '@/assets/blog/cluster-data-using-reduce-on-array-javascript.jpg'
+date: 2023-05-24
+authors:
+    - id/inurhuda00
+excerpt: 'Dalam artikel ini, kita akan membahas cara menggunakan reduce() untuk mengelompokkan data pada array Javascript.'
+topics: ['docs']
+tags:
+    - javascript
+---
+
+Kita akan membahas cara mengelompokkan data menggunakan `reduce()` pada array Javascript. Kita akan menggunakan contoh kode berikut:
+
+```javascript
+const challenges = [
+    {
+        title: "Age Calculator App",
+        type: "app",
+    },
+]
+
+let challenges = challenges
+    .filter((content) => content.status)
+    .reduce((acc, curr) => {
+        // mencari index objek dengan tipe yang sesuai
+        const index = acc.findIndex((obj) => obj.type === curr.type)
+
+        // jika objek dengan tipe tersebut belum ada, tambahkan objek baru
+        if (index === -1) {
+            acc.push({ type: curr.type, contents: [curr] })
+        }
+        // jika objek dengan tipe tersebut sudah ada, tambahkan data ke dalam array yang sudah ada
+        else {
+            acc[index]["contents"].push(curr)
+        }
+
+        return acc
+    }, [])
+
+```
+
+Kode di atas akan mengelompokkan data challenges berdasarkan tipe dari setiap challenge. Output yang dihasilkan adalah \_**array of objects**\_yang berisi tipe dari challenge dan isi dari setiap challenge yang memiliki tipe yang sama.
+
+Hasil pengelompokenanya akan seperti ini,
+
+```javascript
+;[
+	{
+		type: 'app',
+		contents: [{ title: 'judul', type: 'app' }],
+	},
+	{
+		type: 'components',
+		contents: [{ title: 'judul', type: 'components' }],
+	},
+]
+```
+
+Pada contoh kode di atas, menggunakan metode `filter()`untuk menghapus objek yang memiliki **status** `false`. Kemudian, metode **reduce()** digunakan untuk mengelompokkan objek challenges berdasarkan tipe.
+
+Pada setiap **iterasi**, kita mencari indeks objek dengan tipe yang sama menggunakan metode **findIndex()**. Jika objek dengan tipe tersebut belum ada, kita tambahkan objek baru dengan tipe tersebut dan **isi awal dari array contents adalah objek yang sedang diproses**. Jika objek dengan tipe tersebut sudah ada, kita tambahkan isi dari objek yang sedang diproses ke dalam **array contents** yang sudah ada.
+
+Sebagai contoh, jika kita memiliki array challenges sebagai berikut:
+
+```
+const challenges = [
+    { title: "Age Calculator App", type: "app" },
+    { title: "Weather App", type: "app" },
+    { title: "Basic Calculator", type: "app" },
+]
+
+```
+
+Maka, setelah dijalankan dengan kode di atas, output yang dihasilkan adalah sebagai berikut:
+
+```
+[
+  {
+    type: 'app',
+    contents: [
+      { title: 'Age Calculator App', type: 'app' },
+      { title: 'Weather App', type: 'app' },
+      { title: 'Basic Calculator', type: 'app' },
+    ],
+  },
+]
+```
+
+Dalam contoh di atas, semua objek challenges memiliki tipe yang sama yaitu **'app'**, sehingga dihasilkan satu objek dengan tipe tersebut dan isi dari setiap challenge. Namun, jika kita memiliki objek dengan tipe yang berbeda, maka objek tersebut akan dikelompokkan ke dalam objek yang berbeda pula.
+
+Dengan menggunakan metode **reduce()**, kita dapat dengan mudah mengelompokkan data pada array Javascript dengan efektif dan efisien.

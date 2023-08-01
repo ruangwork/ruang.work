@@ -1,0 +1,107 @@
+---
+title: 'Creating Separators in the Laravel Command Table Console'
+cover: '@/assets/blog/how-to-create-separator-on-command-table-console-laravel.jpg'
+date: 2023-04-18
+authors:
+    - id/inurhuda00
+excerpt: 'explore how to create a separator in the command table console in Laravel'
+topics: ['coding']
+tags:
+    - laravel
+    - php
+---
+
+In this article, we will explore how to create a separator in the command table console in Laravel.
+
+### Import Table and TableSeparator Classes
+
+First, we need to import the `Table` and `TableSeparator` classes from package `Symfony\Component\Console\Helper` in our command file.
+
+```php
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableSeparator;
+```
+
+### Retrieve Data from Database
+
+Next, we retrieve the data from the database that we want to display in the form of a table. In this example, we will use the `select` function on the `Content` model and retrieve the `title` column from each row.
+
+```php
+$contents = Content::select('title')->get()->toArray();
+```
+
+### Table Object Initialization
+
+After the data is successfully retrieved, the next step is to initialize the `Table` object and set headers on the table.
+
+```php
+$table = new Table($this->output);
+$table->setHeaders(['title']);
+```
+
+### Looping Data and Add Separator
+
+Then, we loop through the data and add it to the table. Here we use the conditional statement `if` to add `TableSeparator` to every row except the last row.
+
+```php
+$lastIndex = count($contents) - 1;
+foreach ($contents as $index => $content) {
+    $table->addRow([$content['title']]);
+    if ($index != $lastIndex) {
+        $table->addRow(new TableSeparator());
+    }
+}
+```
+
+### Render The Table
+
+The last step is to display the table into the console using the `render()` method.
+
+```php
+$table->render();
+```
+
+---
+
+Maka, jika semua kode di implementasikan akan menjadi,
+
+```php
+$contents = Content::select('title')->get()->toArray();
+
+$table = new Table($this->output);
+
+$table->setHeaders(['title']);
+
+$lastIndex = count($contents) - 1;
+foreach ($contents as $index => $content) {
+    $table->addRow([$content['title']]);
+    if ($index != $lastIndex) {
+        $table->addRow(new TableSeparator());
+    }
+}
+
+$table->render();
+```
+
+### Preview
+
+```bash
++-------------------------------------------------------------------------------------+
+| title                                                                               |
++-------------------------------------------------------------------------------------+
+| Mastering Laravel Zero: A Beginner's Guide to Building Command-Line Applications    |
++-------------------------------------------------------------------------------------+
+| Laravel Zero: The Game-Changing Framework for Effortless Command-Line Development   |
++-------------------------------------------------------------------------------------+
+| Take Command with Laravel Zero: A Step-by-Step Tutorial for Building Powerful CLIs  |
++-------------------------------------------------------------------------------------+
+| The Magic of Laravel Zero: How to Build High-Performance Command-Line Applications  |
++-------------------------------------------------------------------------------------+
+| The Ultimate Guide to Laravel Zero: From Zero to Hero in Command-Line Development   |
++-------------------------------------------------------------------------------------+
+
+```
+
+## Conclusion
+
+In this article, we have discussed how to create a separator in the command table console in Laravel. By adding a `TableSeparator` to each row, we can display data in a more readable and structured table. Hopefully this article is useful and can help in the development of your Laravel application.

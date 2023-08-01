@@ -1,0 +1,109 @@
+---
+title: 'Membuat Separator pada Command Table Console Laravel'
+cover: '@/assets/blog/how-to-create-separator-on-command-table-console-laravel.jpg'
+date: 2023-04-18
+authors:
+    - id/inurhuda00
+excerpt: 'Kita bisa menggunakan Command Table untuk membuat tabel yang bisa kita gunakan untuk menampilkan data secara terstruktur di dalam console Laravel'
+topics: ['coding']
+tags:
+    - laravel
+    - php
+---
+
+Di artikel ini, kita akan membahas bagaimana cara membuat separator pada command table console di Laravel.
+
+## Langkah-langkah
+
+### Import Class Table dan TableSeparator
+
+Pertama, kita perlu mengimport class `Table` dan `TableSeparator` dari package `Symfony\Component\Console\Helper` pada file command kita.
+
+```php
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableSeparator;
+```
+
+### Ambil Data dari Database
+
+Selanjutnya, kita ambil data dari database yang ingin ditampilkan dalam bentuk tabel. Dalam contoh ini, kita akan menggunakan fungsi `select` pada model `Content` dan mengambil kolom `title` dari setiap baris.
+
+```php
+$contents = Content::select('title')->get()->toArray();
+```
+
+### Inisialisasi Object Table
+
+Setelah data berhasil diambil, langkah selanjutnya adalah inisialisasi object `Table` dan set headers pada tabel.
+
+```php
+$table = new Table($this->output);
+$table->setHeaders(['title']);
+```
+
+### Looping Data dan Tambahkan Separator
+
+Kemudian, kita lakukan looping untuk setiap data dan menambahkannya pada tabel. Di sini kita menggunakan conditional statement `if` untuk menambahkan `TableSeparator` pada setiap baris kecuali pada baris terakhir.
+
+```php
+$lastIndex = count($contents) - 1;
+foreach ($contents as $index => $content) {
+    $table->addRow([$content['title']]);
+    if ($index != $lastIndex) {
+        $table->addRow(new TableSeparator());
+    }
+}
+```
+
+### Render Tabel
+
+Langkah terakhir adalah menampilkan tabel ke dalam console dengan menggunakan method `render()`.
+
+```php
+$table->render();
+```
+
+---
+
+Maka, jika semua kode di implementasikan akan menjadi,
+
+```php
+$contents = Content::select('title')->get()->toArray();
+
+$table = new Table($this->output);
+
+$table->setHeaders(['title']);
+
+$lastIndex = count($contents) - 1;
+foreach ($contents as $index => $content) {
+    $table->addRow([$content['title']]);
+    if ($index != $lastIndex) {
+        $table->addRow(new TableSeparator());
+    }
+}
+
+$table->render();
+```
+
+### Preview
+
+```bash
++-------------------------------------------------------------------------------------+
+| title                                                                               |
++-------------------------------------------------------------------------------------+
+| Mastering Laravel Zero: A Beginner's Guide to Building Command-Line Applications    |
++-------------------------------------------------------------------------------------+
+| Laravel Zero: The Game-Changing Framework for Effortless Command-Line Development   |
++-------------------------------------------------------------------------------------+
+| Take Command with Laravel Zero: A Step-by-Step Tutorial for Building Powerful CLIs  |
++-------------------------------------------------------------------------------------+
+| The Magic of Laravel Zero: How to Build High-Performance Command-Line Applications  |
++-------------------------------------------------------------------------------------+
+| The Ultimate Guide to Laravel Zero: From Zero to Hero in Command-Line Development   |
++-------------------------------------------------------------------------------------+
+
+```
+
+## Kesimpulan
+
+Dalam artikel ini, kita telah membahas bagaimana cara membuat separator pada command table console di Laravel. Dengan menambahkan `TableSeparator` pada setiap baris, kita bisa menampilkan data dalam bentuk tabel yang lebih mudah dibaca dan terstruktur. Semoga artikel ini bermanfaat dan dapat membantu dalam pengembangan aplikasi Laravel Anda.

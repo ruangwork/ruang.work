@@ -1,0 +1,86 @@
+---
+title: 'Membuat command line app dengan laravel zero'
+date: 2023-04-14
+authors:
+    - id/inurhuda00
+excerpt: 'Laravel Zero adalah Micro-framework unofficial yang dicustom untuk optimasi pembuatan applikasi command line'
+topics: ['docs']
+tags:
+    - laravel
+    - php
+    - command-line
+---
+
+Unlike Laravel, which is geared towards building web applications, Laravel Zero focuses on generating console applications. Laravel Zero has a minimalistic and straightforward structure, making it easy to create and maintain CLI apps.
+
+Some advantages of using Laravel Zero for CLI applications include:
+
+-   It is designed with scalability in mind, which makes it easy to add new features to your CLI app as your needs change.
+-   Laravel Zero includes pre-built commands and tools that you can use to create CLI apps quickly.
+-   Laravel Zero is built on top of Laravel's powerful components such as the Eloquent ORM, making it easier to integrate your CLI app with your database.
+
+### **Laravel Zero Installation and Configuration**
+
+Installing Laravel Zero is simple and straightforward. The first step is to install Composer, a dependency manager for PHP. Once installed, you can create a new Laravel Zero application by running the following command:
+
+```
+composer create-project --prefer-dist --remove-vcs laravel-zero/laravel-zero my-cli-app
+
+```
+
+This command creates a new Laravel Zero application called "my-cli-app." Once the project is created, you can start working on your CLI app.
+
+Laravel Zero includes many configuration options that you can use to customize your project. These options can be found in the "config" directory of your project. Some of the configuration options available in Laravel Zero include:
+
+-   Environment settings
+-   Database settings
+-   Logging settings
+-   Redis settings
+
+Laravel Zero also makes it easy to use packages and tools with your CLI app. You can install packages using Composer, just like you would with a regular Laravel application. Laravel Zero also includes a built-in package for generating boilerplate code for your CLI app.
+
+---
+
+### **Creating Command-line Applications with Laravel Zero**
+
+Laravel Zero makes it easy to create command-line applications. In this section, we'll walk through building a simple CLI app using Laravel Zero.
+
+To create a new command in Laravel Zero, you can use the following command:
+
+```
+php zero make:command MyCommand
+
+```
+
+This command creates a new command called "MyCommand." Once the command is created, you can add your custom logic to the "handle" method of the command class.
+
+Laravel Zero CLI applications are built using a modular architecture. Each command is a module that takes an input, performs some logic, and produces an output. Laravel Zero includes many built-in features that you can use to customize the inputs, outputs, and tables of your CLI app.
+
+Some advanced features of Laravel Zero CLI applications include:
+
+-   Custom inputs and outputs
+-   Tabular data display
+-   Interactivity
+-   Task scheduling
+
+### **Testing and Debugging Laravel Zero Applications**
+
+Testing and debugging Laravel Zero applications is similar to testing and debugging regular Laravel applications. Laravel Zero includes built-in support for PHPUnit testing, which means you can write simple tests for your CLI app.
+
+Some tips and tricks for testing and debugging Laravel Zero CLI apps include:
+
+-   Use the built-in Symfony Console debugger
+-   Use xDebug and PhpStorm for debugging
+-   Use the built-in CLI debugger
+
+It's also essential to follow best practices when testing and debugging your Laravel Zero application. These include:
+
+-   Write testable code
+-   Test all edge cases
+-   Use appropriate testing tools
+
+### **Conclusion**
+
+In conclusion, Laravel Zero is an excellent choice for developers looking to build CLI applications quickly and efficiently. Its minimalist structure, built-in tools and packages, and scalable architecture make it easy to create powerful and customizable command-line apps with ease.
+
+If you're a developer looking to build your next CLI app, give Laravel Zero a try. We're confident you won't be disappointed.

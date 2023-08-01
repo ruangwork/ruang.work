@@ -1,0 +1,170 @@
+---
+title: 'Membuat click to copy menggunakan custom event dengan svelte'
+cover: '@/assets/blog/create-click-to-copy-using-custom-event-with-svelte.jpg'
+date: 2023-04-08
+authors:
+    - id/inurhuda00
+excerpt: 'Pelajari cara membuat tombol click to copy dengan custom event menggunakan framework Svelte. Dapatkan kode dan tutorial lengkapnya di artikel ini.'
+topics: ['coding']
+tags:
+    - javascript
+    - svelte
+    - typescript
+---
+
+Dalam tutorial ini, kita akan membuat fitur "click to copy" dengan menggunakan custom event pada Svelte.
+
+disini kita akan menggunakan TypeScript, jadi pastikan untuk mengonfigurasi proyek kamui agar mendukung TypeScript sebelum memulai. simple aja, tinggal tambahin `lang="ts"` di script tag kamu.
+
+```javascript
+<script lang="ts">
+```
+
+Pertama, mari kita lihat kode Svelte dasar untuk membuat input teks dan tombol untuk menyalin teks:
+
+```javascript
+<script lang="ts">
+	let input: string = ``;
+
+	function clickToCopy(node: HTMLElement, target?: any) {
+		// implementasi custom event
+	}
+
+	function handleCopied() {
+		// implementasi aksi setelah berhasil menyalin teks
+	}
+</script>
+
+<div>
+	<input type="text" bind:value={input} />
+	<button use:clickToCopy={'#text'} on:copied={handleCopied}>
+		{text}
+	</button>
+	<pre id="text">{input}</pre>
+</div>
+
+```
+
+Pada kode di atas, kita membuat `input` untuk menampung teks yang akan disalin, `clickToCopy` untuk menangani aksi menyalin, dan `handleCopied` untuk menangani aksi setelah berhasil menyalin teks.
+
+Untuk membuat fitur "click to copy" dengan Svelte, kita akan menggunakan `CustomEvent`. CustomEvent memungkinkan kita membuat event yang dapat ditangkap oleh elemen HTML.
+
+```javascript
+async function copyText() {
+	let text = target ? document.querySelector(target)?.innerText : node.innerText
+
+	if (!text) return
+
+	try {
+		await navigator.clipboard.writeText(text)
+
+		node.dispatchEvent(
+			new CustomEvent('copied', {
+				bubbles: true,
+			})
+		)
+	} catch (error) {
+		node.dispatchEvent(
+			new CustomEvent('copyerror', {
+				bubbles: true,
+				detail: error,
+			})
+		)
+	}
+}
+```
+
+Dalam fungsi `copyText`, kita mulai dengan mengambil teks dari elemen HTML yang akan disalin. Jika tidak ada teks yang ditemukan, maka kita keluar dari fungsi.
+
+Kemudian kita mencoba menyalin teks ke clipboard dengan menggunakan `navigator.clipboard.writeText`. Jika berhasil menyalin, kita memicu event "copied" menggunakan `CustomEvent`.
+
+```javascript
+function clickToCopy(node: HTMLElement, target?: any) {
+	async function copyText() {
+		// implementasi copyText seperti di atas
+
+	}
+
+	node.addEventListener('click', copyText);
+
+	return {
+		destroy() {
+			node.removeEventListener('click', copyText);
+		},
+	};
+}
+
+```
+
+Dalam fungsi `clickToCopy`, kita menambahkan event listener untuk event click pada elemen HTML yang akan menyalin teks. Jika event click terdeteksi, maka kita menjalankan fungsi `copyText`.
+
+```javascript
+function handleCopied() {
+	text = 'Copied'
+	window.setTimeout(() => {
+		text = 'Click to Copy'
+	}, 2000)
+}
+```
+
+Dalam fungsi `handleCopied`, kita mengubah teks pada tombol menjadi "Copied" setelah berhasil menyalin teks. Setelah 2 detik, teks akan diubah kembali menjadi "Click to Copy".
+
+Berikut adalah kode semua kode yang diimplementasikan:
+
+```javascript
+<script lang="ts">
+	let input: string = ``;
+
+	function clickToCopy(node: HTMLElement, target?: any) {
+		async function copyText() {
+			let text = target ? document.querySelector(target)?.innerText : node.innerText;
+
+			if (!text) return;
+
+			try {
+				await navigator.clipboard.writeText(text);
+
+				node.dispatchEvent(
+					new CustomEvent('copied', {
+						bubbles: true,
+					})
+				);
+			} catch (error) {
+				node.dispatchEvent(
+					new CustomEvent('copyerror', {
+						bubbles: true,
+						detail: error,
+					})
+				);
+			}
+		}
+
+		node.addEventListener('click', copyText);
+
+		return {
+			destroy() {
+				node.removeEventListener('click', copyText);
+			},
+		};
+	}
+
+	function handleCopied() {
+		text = 'Copied';
+		window.setTimeout(() => {
+			text = 'Click to Copy';
+		}, 2000);
+	}
+</script>
+
+<div>
+	<input type="text" bind:value={input} />
+	<button use:clickToCopy={'#text'} on:copied={handleCopied}>
+		{text}
+	</button>
+	<pre id="text">{input}</pre>
+</div>
+```
+
+implementasinya dapat kamu lihat di playground svelte disini:
+
+cukup simple? gimana menurut kamu?

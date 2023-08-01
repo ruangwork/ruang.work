@@ -16,7 +16,7 @@ const { posts } = Astro.props
 {
 	posts.length !== 0 ? (
 		posts.map((post) => {
-			const { title, date, desc } = post.data
+			const { title, date, excerpt } = post.data
 			return (
 				<article class="flex flex-col sm:flex-row">
 					<a href={localizePath(`${post.slug}`)}>
@@ -24,10 +24,11 @@ const { posts } = Astro.props
 							<Image
 								src={post.data.cover}
 								width={post.data.cover.width / 10}
+								height={post.data.cover.height / 10}
 								decoding="sync"
 								quality="low"
 								alt={t('home:welcoming.greeting')}
-								class="relative mb-2 sm:h-28 pr-2 sm:max-w-[168px] object-cover "
+								class="relative mb-2 border border-slate-700 mr-2 sm:max-w-[168px] object-cover"
 							/>
 						)}
 					</a>
@@ -39,7 +40,7 @@ const { posts } = Astro.props
 						<time class="text-slate-400 font-thin text-xs" datetime={dateFormat(date, i18next.language)}>
 							{dateFormat(date, i18next.language)}
 						</time>
-						<p class="text-sm mt-2">{desc}</p>
+						<p class="text-sm mt-2">{excerpt}</p>
 					</section>
 				</article>
 			)

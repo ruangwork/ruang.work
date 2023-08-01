@@ -15,45 +15,45 @@ import { remarkReadingTime } from './src/lib/remark/remark-reading-time'
 
 // https://astro.build/config
 export default defineConfig({
-  base: '/',
-  site: 'http://localhost:3000',
-  experimental: {
-    assets: true,
-  },
-  image: {
-    service: sharpImageService(),
-  },
-  integrations: [
-    sitemap({
-      i18n: {
-        defaultLocale: 'en',
-        // All urls that don't contain `es` or `fr` after `https://stargazers.club/` will be treated as default locale, i.e. `en`
-        locales: {
-          en: 'en-US',
-          // The `defaultLocale` value must present in `locales` keys
-          id: 'id-ID',
-        },
-      },
-    }),
-    astroI18next(),
-    tailwind(),
-    mdx({
-      remarkPlugins: [remarkExpressiveCode, remarkReadingTime, remarkFirstCode],
-      syntaxHighlight: 'shiki',
-      extendMarkdownConfig: true,
-      rehypePlugins: [
-        rehypeHeadingIds,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: 'before',
-            content: (node: unknown) => {
-              return [h('span.sr-only', `go to ${toString(node)} section`)]
-            },
-          },
-        ],
-      ],
-    }),
-    react(),
-  ],
+	base: '/',
+	site: 'http://localhost:3000',
+	experimental: {
+		assets: true,
+	},
+	image: {
+		service: sharpImageService(),
+	},
+	integrations: [
+		sitemap({
+			i18n: {
+				defaultLocale: 'en',
+				// All urls that don't contain `es` or `fr` after `https://stargazers.club/` will be treated as default locale, i.e. `en`
+				locales: {
+					en: 'en-US',
+					// The `defaultLocale` value must present in `locales` keys
+					id: 'id-ID',
+				},
+			},
+		}),
+		astroI18next(),
+		tailwind(),
+		mdx({
+			remarkPlugins: [remarkExpressiveCode, remarkReadingTime, remarkFirstCode],
+			syntaxHighlight: 'shiki',
+			extendMarkdownConfig: true,
+			rehypePlugins: [
+				rehypeHeadingIds,
+				[
+					rehypeAutolinkHeadings,
+					{
+						behavior: 'before',
+						content: (node: unknown) => {
+							return [h('span.sr-only', `go to ${toString(node)} section`)]
+						},
+					},
+				],
+			],
+		}),
+		react(),
+	],
 })

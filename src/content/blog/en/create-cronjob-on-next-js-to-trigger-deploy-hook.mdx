@@ -1,0 +1,128 @@
+---
+title: 'Create a Cronjob in Next.js to Trigger Deploy Hook'
+cover: '@/assets/blog/create-cronjob-on-next-js-to-trigger-deploy-hook.jpg'
+date: 2023-04-12
+authors:
+    - id/inurhuda00
+excerpt: 'automasi deploy menggunakan cron job di vercel dengan mentrigger deploy hook'
+topics: ['coding']
+tags:
+    - javascript
+    - nextjs
+    - reactjs
+    - cronjob
+    - vercel
+---
+
+Cronjob is a feature in operating systems or cloud services that allows us to run a task at a specified time on a scheduled basis.
+
+In this article, we will discuss how to create a cronjob in [Next.js](https://nextjs.org/) to run a trigger deploy hook task.
+
+## What is Deploy Hook?
+
+Deploy Hook is a URL that we can use to trigger the process of deploying applications on cloud services such as [Vercel](vercel.com/), [Heroku](https://www.heroku.com/), or [Netlify](https://www.netlify.com/). By using the Deploy Hook, we can ensure that every time we push to the main branch of the Git repository, our application will be deployed automatically.
+
+However, sometimes we want to deploy manually, for example if we have made changes to the application configuration or want to deploy to a different environment. In such cases, we can use a cronjob to trigger the Deploy Hook and start the deploy process manually.
+
+## Setting up Environment Variable
+
+You can create `DEPLOY_HOOK_URL` by following vercel's tutorial [here](https://vercel.com/docs/concepts/deployments/deploy-hooks).
+
+Before we start creating a cronjob on [Next.js](https://nextjs.org/), we need to set up an environment variable to store the Deploy Hook URL. Here are the steps to set up the environment variable:
+
+1. Open the `.env.local` file in our [Next.js](https://nextjs.org/) project.
+1. Add the following line to the file:
+
+```javascript
+DEPLOY_HOOK_URL=https://api.vercel.com/v1/integrations/deploy/prj***
+```
+
+Ensure that the `DEPLOY_HOOK_URL` value is populated with the correct Deploy Hook URL.
+
+## Create API to Trigger Deploy Hook
+
+After the environment variables have been set up, next we will create an API to trigger the Deploy Hook in Vercel. Here is an example API implementation for [Next.js](https://nextjs.org/) using TypeScript that handles errors and some other possibilities:
+
+```javascript
+import { NextApiHandler } from 'next'
+import axios from 'axios'
+
+const deployHookUrl = process.env.DEPLOY_HOOK_URL
+
+const handler: NextApiHandler = async (req, res) => {
+  try {
+    if (!deployHookUrl) {
+      throw new Error('Deploy hook url is not set.')
+    }
+
+    const response = await axios.post(deployHookUrl)
+
+    if (response.status === 200) {
+      res.status(200).json({ message: 'Deployment started.' })
+    } else {
+      throw new Error('Failed to trigger deployment.')
+    }
+  } catch (error) {
+    console.error(error)
+
+    let errorMessage = 'Server error.'
+
+    if (error.response && error.response.data) {
+      errorMessage = error.response.data.message
+    } else if (error.message) {
+      errorMessage = error.message
+    }
+
+    res.status(500).json({ message: errorMessage })
+  }
+}
+
+export default handler
+```
+
+In the example above, we use `process.env.DEPLOY_HOOK_URL` to retrieve the Deploy Hook URL that has been stored in the `DEPLOY_HOOK_URL` environment variable. Then, we ensure that the environment variable value is not empty or `null` before making a POST request to the Vercel Deploy Hook. If the value of the `DEPLOY_HOOK_URL` environment variable is empty or `null`, we will throw an error with the message "Deploy hook url is not set.".
+
+In this case, it is important to ensure that the value of the `DEPLOY_HOOK_URL` environment variable is set and matches the Deploy Hook URL we want to use.
+
+## Configure Vercel Cron Jobs
+
+Next, after creating the API to trigger the Deploy Hook in Vercel, we need to set up a cron job so that the API can be run on a scheduled basis. Here is an example of a cron configuration from Vercel that can be set in the `vercel.json` file:
+
+```json
+{
+	"crons": [
+		{
+			"path": "/api/cron",
+			"schedule": "0 0 1-31/2 * *"
+		}
+	]
+}
+```
+
+In the example above, we created a cron job that will run the API on the `/api/cron` path every odd date (1, 3, 5, ... 31) at 00:00. We can change the configuration of this cron job as needed.
+
+base on vercel cronjob [article](https://vercel.com/docs/cron-jobs#cron-expressions). here some config.
+
+```bash
+# ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of the month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12)
+# │ │ │ │ ┌───────────── day of the week (0 - 6) (0 is Sunday, 6 is Saturday)
+# │ │ │ │ │
+# │ │ │ │ │
+# │ │ │ │ │
+# * * * * *
+```
+
+| expressions    | Description                             |
+| -------------- | --------------------------------------- |
+| `* * * * *`    | Triggers every minute                   |
+| `*/10 * * * *` | Triggers every ten minutes              |
+| `0 * * * *`    | Triggers at the beginning of every hour |
+| `0 3 * * *`    | Triggers every day at 3:00 am           |
+| `10 5 * * 0`   | Triggers every Sunday at 5:10 am        |
+
+By using a cron job and API to trigger the Deploy Hook in Vercel, we can make the application deployment process easier and more scheduled.
+
+In addition, by utilizing these features, we can focus more on developing our applications and avoid monotonous and time-consuming manual processes.

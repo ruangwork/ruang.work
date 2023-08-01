@@ -11,7 +11,10 @@ import Ads from '@/components/mdx/ads.astro'
 import Toc from '@/components/mdx/toc.astro'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const pages = await getCollection('blog')
+	const pages = await getCollection(
+		'blog',
+		({ data }) => !data.draft && new Date(data.date).getTime() < new Date().getTime()
+	)
 	const paths = pages.map((page) => {
 		const [lang, ...slug] = page.slug.split('/')
 		return { params: { lang, slug: slug.join('/') || undefined }, props: page }
@@ -44,7 +47,7 @@ const authors = await getEntries(page.data.authors)
 		<h1 class="m-0 text-3xl font-bold leading-10 md:text-4xl md:leading-none">
 			{page.data.title}
 		</h1>
-		<div class="mt-4 inline-flex flex-col gap-2 md:flex-row md:items-center">
+		<div class="mt-4 mb-6 inline-flex flex-col gap-2 md:flex-row md:items-center">
 			<div
 				class="flex w-auto cursor-pointer items-center rounded-full border border-solid border-gray-800 bg-black px-3 py-2">
 				<div class="not-prose flex items-center text-slate-100">
@@ -71,7 +74,7 @@ const authors = await getEntries(page.data.authors)
 					decoding="async"
 					quality="low"
 					alt={t('home:welcoming.greeting')}
-					class="relative my-6 w-full object-cover"
+					class="relative my-6 w-full object-cover border-2 border-slate-800"
 				/>
 			)
 		}

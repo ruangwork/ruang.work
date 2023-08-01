@@ -1,0 +1,96 @@
+---
+title: 'Clustering Data Using Reduce on JavaScript Arrays'
+cover: '@/assets/blog/cluster-data-using-reduce-on-array-javascript.jpg'
+date: 2023-05-24
+authors:
+    - id/inurhuda00
+excerpt: 'In this article, we will discuss how to use reduce() to group data in a JavaScript array.'
+topics: ['docs']
+tags:
+    - javascript
+---
+
+We will explore how to group data using `reduce()` in JavaScript arrays. We will use the following code example:
+
+```javascript
+const challenges = [
+    {
+        title: "Age Calculator App",
+        type: "app",
+    },
+    {
+        title: "Drawer",
+        type: "components",
+    },
+]
+
+let challenges = challenges
+    .filter((content) => content.status)
+    .reduce((acc, curr) => {
+        // find the index of the object with the appropriate type
+        const index = acc.findIndex((obj) => obj.type === curr.type)
+
+        // if an object of that type doesn't already exist, add a new object
+        if (index === -1) {
+            acc.push({ type: curr.type, contents: [curr] })
+        }
+        // if an object of that type already exists, add the data to the existing array
+        else {
+            acc[index]["contents"].push(curr)
+        }
+
+        return acc
+    }, [])
+
+```
+
+The code above will group the challenges data based on the type of each challenge. The output is an \_**array of objects**\_ that contains the type of challenge and the content of each challenge that has the same type.
+
+The grouping result will look like this,
+
+```javascript
+;[
+	{
+		type: 'app',
+		contents: [{ title: 'title', type: 'app' }],
+	},
+	{
+		type: 'components',
+		contents: [{ title: 'title', type: 'components' }],
+	},
+]
+```
+
+In the example above, the `filter()` method is used to remove objects that have a **status** of `false`. Then, the **reduce()** method is used to group the challenges objects by type.
+
+At each **iteration**, we search the index of objects with the same type using the **findIndex()** method. If an object of that type does not exist, we add a new object of that type and **the initial contents of the contents array is the object being processed**. If an object of that type already exists, we add the contents of the object being processed to the existing **array contents**.
+
+For example, if we have an array of challenges as follows:
+
+```
+const challenges = [
+    { title: "Age Calculator App", type: "app" },
+    { title: "Weather App", type: "app" },
+    { title: "Basic Calculator", type: "app" },
+]
+
+```
+
+So, after running the above code, the output is as follows:
+
+```
+[
+  {
+    type: 'app',
+    contents: [
+      { title: 'Age Calculator App', type: 'app' },
+      { title: 'Weather App', type: 'app' },
+      { title: 'Basic Calculator', type: 'app' },
+    ],
+  },
+]
+```
+
+In the above example, all challenge objects have the same type **'app'**, so one object of that type and the contents of each challenge are generated. However, if we have objects with different types, they will be grouped into different objects.
+
+By using the **reduce()** method, we can easily group data in Javascript arrays effectively and efficiently.

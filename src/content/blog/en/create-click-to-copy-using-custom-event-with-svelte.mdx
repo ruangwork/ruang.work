@@ -1,0 +1,170 @@
+---
+title: 'Create click to copy using custom event with svelte'
+cover: '@/assets/blog/create-click-to-copy-using-custom-event-with-svelte.jpg'
+date: 2023-04-08
+authors:
+    - id/inurhuda00
+excerpt: 'Explore how to create a click to copy button with a custom event using the Svelte framework.'
+topics: ['coding']
+tags:
+    - javascript
+    - svelte
+    - typescript
+---
+
+In this tutorial, we will create "click to copy" feature by using custom event in Svelte.
+
+in this tutorial we use TypeScript, so make sure to configure your project to support Typescript before starting.
+
+It's simple, just add `lang="ts"` is your script tag. 👍🏻
+
+```typescript
+<script lang="ts">
+```
+
+First, let's look at the basic Svelte skeleton code to create a text input and button to copy the text. i added `on:copied` to imagine how it would happen.
+
+```javascript
+<script lang="ts">
+	let input: string = ``;
+
+	function clickToCopy(node: HTMLElement, target?: any) {
+		// implementasi custom event
+	}
+
+	function handleCopied() {
+		// implementasi aksi setelah berhasil menyalin teks
+	}
+</script>
+
+<div>
+	<input type="text" bind:value={input} />
+	<button use:clickToCopy={'#text'} on:copied={handleCopied}>
+		{text}
+	</button>
+	<pre id="text">{input}</pre>
+</div>
+
+```
+
+In the code above, we create `input` to hold the text to be copied, `clickToCopy` to handle the coping action, and `handleCopied` to handle the action after successfully copying the text.
+
+To create the "click to copy" feature with Svelte, we will use `CustomEvent` class. CustomEvent allows us to create events that can be captured by HTML elements.
+
+```javascript
+async function copyText() {
+	let text = target ? document.querySelector(target)?.innerText : node.innerText
+
+	if (!text) return
+
+	try {
+		await navigator.clipboard.writeText(text)
+
+		node.dispatchEvent(
+			new CustomEvent('copied', {
+				bubbles: true,
+			})
+		)
+	} catch (error) {
+		node.dispatchEvent(
+			new CustomEvent('copyerror', {
+				bubbles: true,
+				detail: error,
+			})
+		)
+	}
+}
+```
+
+In the `copyText` function, we start by retrieving the text of the HTML element to be copied. If no text is found, then we exit the function.
+
+Then we try to copy the text to the clipboard using `navigator.clipboard.writeText`. If the copy is successful, we trigger the "copied" event using `CustomEvent`.
+
+```javascript
+function clickToCopy(node: HTMLElement, target?: any) {
+	async function copyText() {
+		// implementasi copyText seperti di atas
+
+	}
+
+	node.addEventListener('click', copyText);
+
+	return {
+		destroy() {
+			node.removeEventListener('click', copyText);
+		},
+	};
+}
+
+```
+
+In the `clickToCopy` function, we add an event listener for the click event on the HTML element that will copy the text. If the click event is detected, then we execute the `copyText` function.
+
+```javascript
+function handleCopied() {
+	text = 'Copied'
+	window.setTimeout(() => {
+		text = 'Click to Copy'
+	}, 2000)
+}
+```
+
+In the `handleCopied` function, we change the text on the button to "Copied" after successfully copying the text. After 2 seconds, the text will be changed back to "Click to Copy".
+
+Here are the codes of all the implemented codes:
+
+```javascript
+<script lang="ts">
+	let input: string = ``;
+
+	function clickToCopy(node: HTMLElement, target?: any) {
+		async function copyText() {
+			let text = target ? document.querySelector(target)?.innerText : node.innerText;
+
+			if (!text) return;
+
+			try {
+				await navigator.clipboard.writeText(text);
+
+				node.dispatchEvent(
+					new CustomEvent('copied', {
+						bubbles: true,
+					})
+				);
+			} catch (error) {
+				node.dispatchEvent(
+					new CustomEvent('copyerror', {
+						bubbles: true,
+						detail: error,
+					})
+				);
+			}
+		}
+
+		node.addEventListener('click', copyText);
+
+		return {
+			destroy() {
+				node.removeEventListener('click', copyText);
+			},
+		};
+	}
+
+	function handleCopied() {
+		text = 'Copied';
+		window.setTimeout(() => {
+			text = 'Click to Copy';
+		}, 2000);
+	}
+</script>
+
+<div>
+	<input type="text" bind:value={input} />
+	<button use:clickToCopy={'#text'} on:copied={handleCopied}>
+		{text}
+	</button>
+	<pre id="text">{input}</pre>
+</div>
+```
+
+Pretty simple? What do you think?

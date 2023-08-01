@@ -1,0 +1,100 @@
+---
+title: 'Membuat Cronjob pada Next.js untuk Trigger Deploy Hook'
+cover: '@/assets/blog/create-cronjob-on-next-js-to-trigger-deploy-hook.jpg'
+date: 2023-04-12
+authors:
+    - id/inurhuda00
+excerpt: 'automasi deploy menggunakan cron job di vercel dengan mentrigger deploy hook'
+topics: ['coding']
+tags:
+    - javascript
+    - nextjs
+    - reactjs
+    - cronjob
+    - vercel
+---
+
+Cronjob adalah fitur di sistem operasi atau layanan cloud yang memungkinkan kita untuk menjalankan suatu tugas pada waktu yang ditentukan secara terjadwal. Pada artikel ini, kita akan membahas bagaimana cara membuat cronjob pada Next.js untuk menjalankan tugas trigger deploy hook.
+
+## **Apa itu Deploy Hook?**
+
+Deploy Hook adalah sebuah URL yang dapat kita gunakan untuk memicu proses deploy aplikasi pada layanan cloud seperti Vercel, Heroku, atau Netlify. Dengan menggunakan Deploy Hook, kita dapat memastikan bahwa setiap kali kita melakukan push ke branch utama pada repository Git, aplikasi kita akan di-deploy secara otomatis.
+
+Namun, kadang-kadang kita ingin melakukan deploy secara manual, misalnya jika kita telah melakukan perubahan pada konfigurasi aplikasi atau ingin melakukan deploy ke environment yang berbeda. Dalam kasus seperti itu, kita dapat menggunakan cronjob untuk memicu Deploy Hook dan memulai proses deploy secara manual.
+
+## **Menyiapkan Environment Variable**
+
+Sebelum kita memulai membuat cronjob pada Next.js, kita perlu menyiapkan environment variable untuk menyimpan Deploy Hook URL. Berikut adalah langkah-langkah untuk menyiapkan environment variable:
+
+1. Buka file `.env.local` pada project Next.js kita.
+1. Tambahkan baris berikut pada file tersebut:
+
+```javascript
+DEPLOY_HOOK_URL=https://api.vercel.com/v1/integrations/deploy/prj***
+```
+
+Pastikan bahwa nilai `DEPLOY_HOOK_URL` telah diisi dengan URL Deploy Hook yang benar.
+
+## **Membuat API untuk Trigger Deploy Hook**
+
+Setelah environment variable telah disiapkan, selanjutnya kita akan membuat API untuk memicu Deploy Hook pada Vercel. Berikut adalah contoh implementasi API untuk Next.js menggunakan TypeScript yang meng-handle error dan beberapa kemungkinan lainnya:
+
+```javascript
+import { NextApiHandler } from 'next'
+import axios from 'axios'
+
+const deployHookUrl = process.env.DEPLOY_HOOK_URL
+
+const handler: NextApiHandler = async (req, res) => {
+  try {
+    if (!deployHookUrl) {
+      throw new Error('Deploy hook url is not set.')
+    }
+
+    const response = await axios.post(deployHookUrl)
+
+    if (response.status === 200) {
+      res.status(200).json({ message: 'Deployment started.' })
+    } else {
+      throw new Error('Failed to trigger deployment.')
+    }
+  } catch (error) {
+    console.error(error)
+
+    let errorMessage = 'Server error.'
+
+    if (error.response && error.response.data) {
+      errorMessage = error.response.data.message
+    } else if (error.message) {
+      errorMessage = error.message
+    }
+
+    res.status(500).json({ message: errorMessage })
+  }
+}
+
+export default handler
+```
+
+Pada contoh di atas, kita menggunakan `process.env.DEPLOY_HOOK_URL` untuk mengambil Deploy Hook URL yang telah disimpan di dalam environment variable `DEPLOY_HOOK_URL`. Kemudian, kita memastikan bahwa nilai environment variable tersebut tidak kosong atau `null` sebelum melakukan POST request ke Vercel Deploy Hook. Jika nilai environment variable `DEPLOY_HOOK_URL` kosong atau `null`, kita akan melempar error dengan pesan "Deploy hook url is not set.".
+
+Dalam hal ini, penting untuk memastikan bahwa nilai environment variable `DEPLOY_HOOK_URL` telah di-set dan sesuai dengan Deploy Hook URL yang ingin kita gunakan.
+
+## Konfigurasi Vercel Cron Jobs
+
+Selanjutnya, setelah membuat API untuk memicu Deploy Hook pada Vercel, kita perlu mengatur cron job agar API tersebut dapat dijalankan secara terjadwal. Berikut adalah contoh konfigurasi cron dari Vercel yang dapat diatur di file vercel.json:
+
+```json
+{
+	"crons": [
+		{
+			"path": "/api/cron",
+			"schedule": "0 0 1-31/2 * *"
+		}
+	]
+}
+```
+
+Pada contoh di atas, kita membuat cron job yang akan menjalankan API pada path /api/cron setiap tanggal ganjil (1, 3, 5, ... 31) di waktu 00:00. kita dapat mengubah konfigurasi cron job ini sesuai dengan kebutuhan.
+
+Dengan menggunakan cron job dan API untuk memicu Deploy Hook pada Vercel, kita dapat membuat proses deployment aplikasi menjadi lebih mudah dan terjadwal. Selain itu, dengan memanfaatkan fitur-fitur ini, kita dapat lebih fokus pada pengembangan aplikasi kita dan menghindari proses manual yang monoton dan memakan waktu.

@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import i18next from 'i18next'
+
+import { cn } from '@/lib/utils/cn'
+
+type Props = {
+	authors: CollectionEntry<'author'>[]
+}
+
+const { authors } = Astro.props
+const formattedNames = new Intl.ListFormat(i18next.language)
+	.format(authors.map((author) => author.data.name))
+	.replace('and', '&')
+---
+
+<div class={cn('not-prose flex items-center')}>
+	<ul class="flex h-6 list-none items-center -space-x-4">
+		{
+			authors.map((author) =>
+				author.data.avatar ? (
+					<li>
+						<Image
+							class="h-6 w-6 rounded-full ring-2 ring-white"
+							alt={`Avatar for ${author.data.name}`}
+							src={author.data.avatar}
+							width={24}
+							height={24}
+						/>
+					</li>
+				) : null
+			)
+		}
+	</ul>
+	<span class="pl-2 text-xs font-medium">{formattedNames}</span>
+</div>

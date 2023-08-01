@@ -1,10 +1,11 @@
 ---
 import Base from '@/layouts/base.astro'
-import type { GetStaticPaths, InferGetStaticParamsType, InferGetStaticPropsType, Page } from 'astro'
-import { CollectionEntry, getCollection } from 'astro:content'
-import { changeLanguage } from 'i18next'
+import type { GetStaticPaths } from 'astro'
+import { Image } from 'astro:assets'
+import { CollectionEntry, getCollection, getEntries } from 'astro:content'
+import { changeLanguage, t } from 'i18next'
 
-import Aside from '@/components/aside'
+import AuthorList from '@/components/author-list.astro'
 // mdx custom
 import Ads from '@/components/mdx/ads.astro'
 import Toc from '@/components/mdx/toc.astro'
@@ -18,11 +19,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	return paths
 }
 
+type Props = CollectionEntry<'blog'>
+
 const { lang } = Astro.params
 
 changeLanguage(lang)
-
-type Props = CollectionEntry<'blog'>
 
 const page = Astro.props
 
@@ -34,17 +35,47 @@ const formattedDate = page.data.date.toLocaleString(lang, {
 })
 
 const { Content, remarkPluginFrontmatter, headings } = await page.render()
+
+const authors = await getEntries(page.data.authors)
 ---
 
 <Base title={page.data.title}>
-	<div class="grid grid-cols-1">
-		<article class="prose dark:prose-invert">
-			<h1>{page.data.title}</h1>
-			<h5>{remarkPluginFrontmatter.minutesRead}</h5>
-			<p>by {page.data.authors.at(0)} • {formattedDate}</p>
-			<Toc headings={headings} />
-			<Content components={{ Ads }} />
-		</article>
-		<Aside headings={headings} />
-	</div>
+	<article class="prose dark:prose-invert mt-12">
+		<h1 class="m-0 text-3xl font-bold leading-10 md:text-4xl md:leading-none">
+			{page.data.title}
+		</h1>
+		<div class="mt-4 inline-flex flex-col gap-2 md:flex-row md:items-center">
+			<div
+				class="flex w-auto cursor-pointer items-center rounded-full border border-solid border-gray-800 bg-black px-3 py-2">
+				<div class="not-prose flex items-center text-slate-100">
+					<AuthorList authors={authors} />
+				</div>
+			</div>
+			<div class="mt-2 flex h-full items-center gap-x-2 md:m-0 text-xs">
+				<span class="hidden text-slate-500 md:my-0 md:block">•</span>
+				<time datetime={formattedDate} aria-label={formattedDate} class='text-slate-400"'>
+					{formattedDate}
+				</time>
+				<span class='text-slate-500"'>•</span>
+				<p class="m-0 text-slate-400">
+					{remarkPluginFrontmatter.minutesRead}
+				</p>
+			</div>
+		</div>
+
+		{
+			page.data.cover && (
+				<Image
+					src={page.data.cover}
+					width={page.data.cover.width / 10}
+					decoding="async"
+					quality="low"
+					alt={t('home:welcoming.greeting')}
+					class="relative my-6 w-full object-cover"
+				/>
+			)
+		}
+		<Toc headings={headings} />
+		<Content components={{ Ads }} />
+	</article>
 </Base>

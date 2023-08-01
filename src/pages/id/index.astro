@@ -39,7 +39,7 @@ const snippets = await getCollection('snippets', ({ id }) => {
 
 		<section>
 			<h2 class="py-6 text-2xl">{t('section.blog')}</h2>
-			<div class="grid gap-4">
+			<div class="grid grid-cols-1 gap-4">
 				<ArticleItem posts={posts} />
 			</div>
 		</section>

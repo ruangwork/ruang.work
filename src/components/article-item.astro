@@ -1,7 +1,8 @@
 ---
 import { localizePath } from 'astro-i18next'
+import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
-import i18next from 'i18next'
+import i18next, { t } from 'i18next'
 
 import { dateFormat } from '@/lib/utils/date-format'
 
@@ -17,14 +18,29 @@ const { posts } = Astro.props
 		posts.map((post) => {
 			const { title, date, desc } = post.data
 			return (
-				<article>
+				<article class="flex flex-col sm:flex-row">
 					<a href={localizePath(`${post.slug}`)}>
-						<h1 class="font-bold text-lg">{title}</h1>
+						{post.data.cover && (
+							<Image
+								src={post.data.cover}
+								width={post.data.cover.width / 10}
+								decoding="sync"
+								quality="low"
+								alt={t('home:welcoming.greeting')}
+								class="relative mb-2 sm:h-28 pr-2 sm:max-w-[168px] object-cover "
+							/>
+						)}
 					</a>
-					<time class="text-slate-400 font-thin text-xs" datetime={dateFormat(date, i18next.language)}>
-						{dateFormat(date, i18next.language)}
-					</time>
-					<p class="text-sm mt-2">{desc}</p>
+
+					<section>
+						<a href={localizePath(`${post.slug}`)}>
+							<h1 class="font-bold text-lg">{title}</h1>
+						</a>
+						<time class="text-slate-400 font-thin text-xs" datetime={dateFormat(date, i18next.language)}>
+							{dateFormat(date, i18next.language)}
+						</time>
+						<p class="text-sm mt-2">{desc}</p>
+					</section>
 				</article>
 			)
 		})

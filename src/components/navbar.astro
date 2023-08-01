@@ -14,13 +14,15 @@ const pathname = new URL(Astro.request.url).pathname
 const current = pathname ? pathname : ''
 ---
 
-<header class="mt-6 mb-4">
-	<div class="flex justify-between mb-4 items-center">
-		<h1 class="font-mono text-xl font-bold mb-4">Ruang.work</h1>
+<header class="mt-6 mb-4 relative">
+	<div class="flex justify-between my-8 items-center">
+		<a href={localizePath()}>
+			<h1 class="font-mono text-xl font-bold">Ruang.work</h1>
+		</a>
 		<LanguageSelector showFlag={true} />
 	</div>
 
-	<nav class="flex items-center gap-x-4">
+	<nav class="hidden sm:flex items-center gap-x-4">
 		<a class={cn(current === '' ? 'bg-cyan-400' : ' ')} href={localizePath()}>
 			{t('nav.home.title')}
 		</a>
@@ -34,5 +36,84 @@ const current = pathname ? pathname : ''
 			{t('nav.about.title')}
 		</a>
 		<ThemeToggle client:load />
+	</nav>
+
+	<nav
+		class="grid sm:hidden max-w-lg grid-cols-4 place-items-center left-1/2 -translate-x-1/2 py-2 bottom-0 w-full fixed bg-slate-50 z-50">
+		<!-- Item #1 -->
+		<div class="group flex">
+			<a
+				href={localizePath()}
+				class={cn('p-0.5 text-gray-400 hover:text-cyan-400', current === '' ? 'text-cyan-400' : ' ')}>
+				<span class="flex flex-col items-center">
+					<!-- Text -->
+					<span class="mb-2 text-xs transition-all duration-200"> {t('nav.home.title')}</span>
+
+					<!-- Focus Dot -->
+					<span
+						class={cn(
+							'h-1 w-5 rounded-full transition-all delay-100 duration-150 group-hover:bg-cyan-400',
+							current === '' ? 'bg-cyan-400' : ''
+						)}></span>
+				</span>
+			</a>
+		</div>
+
+		<!-- Item #2 -->
+		<div class="group flex">
+			<a
+				href={localizePath('blog')}
+				class={cn('p-0.5 text-gray-400 hover:text-cyan-400', current === 'blog' ? 'text-cyan-400' : ' ')}>
+				<span class="flex flex-col items-center">
+					<!-- Text -->
+					<span class="mb-2 text-xs transition-all duration-200"> {t('nav.blog.title')}</span>
+
+					<!-- Focus Dot -->
+					<span
+						class={cn(
+							'h-1 w-5 rounded-full transition-all delay-100 duration-150 group-hover:bg-cyan-400',
+							current === 'blog' ? 'bg-cyan-400' : ''
+						)}></span>
+				</span>
+			</a>
+		</div>
+
+		<!-- Item #3 Active -->
+		<div class="group flex">
+			<a
+				href={localizePath('snippets')}
+				class={cn('p-0.5 text-gray-400 hover:text-cyan-400', current === 'snippets' ? 'text-cyan-400' : ' ')}>
+				<span class="flex flex-col items-center">
+					<!-- Text -->
+					<span class="mb-2 text-xs transition-all duration-200"> {t('nav.snippet.title')}</span>
+
+					<!-- Focus Dot -->
+					<span
+						class={cn(
+							'h-1 w-5 rounded-full transition-all delay-100 duration-150 group-hover:bg-cyan-400',
+							current === 'snippets' ? 'bg-cyan-400' : ''
+						)}></span>
+				</span>
+			</a>
+		</div>
+
+		<!-- Item #4 -->
+		<div class="group flex">
+			<a
+				href={localizePath('about')}
+				class={cn('p-0.5 text-gray-400 hover:text-cyan-400', current === 'about' ? 'text-cyan-400' : ' ')}>
+				<span class="flex flex-col items-center">
+					<!-- Text -->
+					<span class="mb-2 text-xs transition-all duration-200"> {t('nav.about.title')}</span>
+
+					<!-- Focus Dot -->
+					<span
+						class={cn(
+							'h-1 w-5 rounded-full transition-all delay-100 duration-150 group-hover:bg-cyan-400',
+							current === 'about' ? 'bg-cyan-400' : ''
+						)}></span>
+				</span>
+			</a>
+		</div>
 	</nav>
 </header>

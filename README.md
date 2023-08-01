@@ -8,31 +8,34 @@ npm create astro@latest -- --template minimal
 [fazzaamiarso](https://github.com/fazzaamiarso/fazzaamiarso.me-v2)
 
 [engineering blog](https://github.com/EddyVinck/astro-engineering-blog)
-[] Easy configuration
-[x] Minimal styling (make it your own!)
-[] 100/100 Lighthouse performance
-[x] SEO-friendly with canonical URLs and OpenGraph data
-[] Uses astro:assets for optimized images
-[x] Sitemap support
-[x] RSS Feed support
-[x] Markdown & MDX support
-[] Search functionality
-[x] Author system
-[x] Multiple authors per post (co-authoring)
-[x] Topics
-[x] Blog pagination
-[x] Dark Mode
+
+-   [ ] Easy configuration
+-   [x] Minimal styling (make it your own!)
+-   [ ] 100/100 Lighthouse performance
+-   [x] SEO-friendly with canonical URLs and OpenGraph data
+-   [ ] Uses astro:assets for optimized images
+-   [x] Sitemap support
+-   [x] RSS Feed support
+-   [x] Markdown & MDX support
+-   [ ] Search functionality
+-   [x] Author system
+-   [x] Multiple authors per post (co-authoring)
+-   [x] Topics
+-   [x] Blog pagination
+-   [x] Dark Mode
 
 [accessible-astro-starter](https://github.com/markteekman/accessible-astro-starter)
-[x] Tailwind CSS support
-[ ] Prettier integration with `prettier-plugin-astro` and `prettier-plugin-tailwind`
-[x] Semantic Tag
+
+-   [x] Tailwind CSS support
+-   [ ] Prettier integration with `prettier-plugin-astro` and `prettier-plugin-tailwind`
+-   [x] Semantic Tag
 
 Utility pages
-[ ] Terms
-[ ] Privacy
-[ ] FAQ
-[ ] 404
+
+-   [ ] Terms
+-   [ ] Privacy
+-   [ ] FAQ
+-   [ ] 404
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
 [![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)

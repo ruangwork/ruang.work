@@ -1,0 +1,51 @@
+---
+import { localizePath } from 'astro-i18next'
+import { getCollection } from 'astro:content'
+import i18next from 'i18next'
+
+import { cn } from '@/lib/utils/cn'
+
+interface Props {
+	current?: string
+	'class:list'?: string
+}
+
+const { current = 'all' } = Astro.props
+
+const series = await getCollection('series', ({ id }) => {
+	return id.startsWith(`${i18next.language}/`)
+})
+---
+
+<nav class={cn('flex flex-wrap gap-2 py-2', Astro.props['class:list'])}>
+	<a
+		href={localizePath('/blog')}
+		class={cn(
+			'inline-flex items-center border px-2.5 py-0.5 text-xs',
+			current === 'all' ? 'bg-slate-700 text-white dark:bg-slate-50 dark:text-slate-800' : ''
+		)}>
+		All
+	</a>
+	{
+		series.map((series) => {
+			return (
+				<a
+					href={localizePath(
+						`${series.slug
+							.split('/')
+							.slice(0, 1)
+							.concat('series', series.slug.split('/').slice(1))
+							.join('/')}`
+					)}
+					class={cn(
+						'inline-flex items-center border px-2.5 py-0.5 text-xs',
+						current === series.slug.split('/')[1]
+							? 'bg-slate-700 text-white dark:bg-slate-50 dark:text-slate-800'
+							: ''
+					)}>
+					{series.data.title}
+				</a>
+			)
+		})
+	}
+</nav>

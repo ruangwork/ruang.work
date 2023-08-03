@@ -1,0 +1,66 @@
+---
+import { localizePath } from 'astro-i18next'
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import i18next, { t } from 'i18next'
+
+import { dateFormat } from '@/lib/utils/date-format'
+import { getArticlesBySlugs } from '@/repository/blog'
+
+interface Props {
+	series: CollectionEntry<'series'>[]
+}
+
+const { series } = Astro.props
+---
+
+{
+	series.length !== 0 ? (
+		series.map(async (serie) => {
+			const { title, date, excerpt } = serie.data
+			const articles = await getArticlesBySlugs('blog', serie.data.articles)
+			return (
+				<section>
+					<article class="flex flex-col items-center sm:flex-row">
+						<a href={localizePath(`${serie.slug}`)}>
+							{serie.data.cover && (
+								<Image
+									src={serie.data.cover}
+									width={serie.data.cover.width / 10}
+									height={serie.data.cover.height / 10}
+									decoding="sync"
+									quality="low"
+									alt={t('home:welcoming.greeting')}
+									class="relative mb-2 border border-slate-700 mr-2 sm:max-w-[168px] object-cover"
+								/>
+							)}
+						</a>
+
+						<section>
+							<a href={localizePath(`${serie.slug}`)}>
+								<h1 class="font-bold text-lg">{title}</h1>
+							</a>
+							<time
+								class="text-slate-400 font-thin text-xs"
+								datetime={dateFormat(date, i18next.language)}>
+								{dateFormat(date, i18next.language)}
+							</time>
+							<p class="text-sm mt-2">{excerpt}</p>
+						</section>
+					</article>
+					<ul class="grid gap-2 mt-4">
+						{articles.map(async (post) => (
+							<a
+								href={localizePath(`${post.slug}`)}
+								class="w-full text-xs text-left font-medium tracking-widest border-2 border-slate-700 dark:border-slate-50 py-1 px-2">
+								{post.data.title}
+							</a>
+						))}
+					</ul>
+				</section>
+			)
+		})
+	) : (
+		<span>write some serie</span>
+	)
+}

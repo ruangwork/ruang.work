@@ -67,14 +67,14 @@ const series = defineCollection({
 		z.object({
 			title: z.string(),
 			draft: z.boolean().default(false).optional(),
-			authors: z.array(z.string()).default(['anonymous']), // the same as the filename without the extension
+			authors: z.array(z.string()).default([]), // the same as the filename without the extension
 			cover: image()
 				.refine((img) => img.width >= 900, {
 					message: 'Cover image must be at least 1080 pixels wide!',
 				})
 				.optional(),
 			date: z.date(),
-			excerpt: z.string().refine((string) => string.length >= 140, {
+			excerpt: z.string().refine((string) => string.length <= 140, {
 				message: 'excerpt must less than 155',
 			}),
 			articles: z.array(z.string()).default([]), // the same as the filename without the extension

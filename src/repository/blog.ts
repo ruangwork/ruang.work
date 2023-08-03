@@ -1,4 +1,4 @@
-import { CollectionEntry, getCollection } from 'astro:content'
+import { CollectionEntry, getCollection, getEntries } from 'astro:content'
 
 import i18next from 'i18next'
 
@@ -9,6 +9,14 @@ export const filterNotDraftPublished = ({ data }: CollectionEntry<'blog'>) =>
 	!data.draft && new Date(data.date).getTime() < new Date().getTime()
 
 export const getArticles = async () => await getCollection('blog', filterLangNotDraftPublished)
+
+export const getArticlesBySlugs = async (collection: string, articles: string[]): Promise<CollectionEntry<'blog'>[]> =>
+	await getEntries(
+		// @ts-ignore
+		articles.map((author) => {
+			return { collection, slug: `${i18next.language}/${author}` }
+		})
+	)
 
 export const recentArticle = (collections: CollectionEntry<'blog'>[]) => {
 	return collections.sort((a, b) => {

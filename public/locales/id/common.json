@@ -1,25 +1,42 @@
 {
+  "title": "Ruang Work | Share to learn",
+  "title_template": "%s | Ruang Work",
+  "description": "Ruang.work adalah tempat untuk berbagi konten seperti pemrograman, desain, AI, cryptocurrency, buku, film, hingga review produk.",
   "nav": {
     "home": {
-      "title": "Beranda",
-      "body": "Selamat datang di halaman beranda kami! Temukan berbagai konten menarik, termasuk artikel terbaru, cuplikan kode, dan informasi tentang kami."
+      "title": "Beranda"
     },
     "blog": {
-      "title": "Blog",
-      "body": "Temukan pemikiran, ide, dan pengetahuan terbaru tentang berbagai topik menarik di halaman blog kami."
+      "title": "Blog"
     },
     "snippet": {
-      "title": "Snippets",
-      "body": "Temukan kumpulan cuplikan kode dan trik pemrograman yang berguna di halaman Snippets."
+      "title": "Snippets"
     },
     "about": {
-      "title": "Tentang",
-      "body": "Pelajari lebih lanjut tentang kami dan visi kami di halaman About."
+      "title": "Tentang"
     }
   },
   "section": {
     "blog": "Artikel Terbaru",
     "snippet": "Snippets",
     "about": "Tentang"
+  },
+  "meta": {
+    "about": {
+      "title": "",
+      "description": ""
+    },
+    "snippets": {
+      "title": "Code Snippets make it easier",
+      "description": "The Snippets page adalah kumpulan cuplikan kode yang berguna yang dikumpulkan dari berbagai sumber. Templat yang memudahkan untuk memasukkan pola kode yang berulang,"
+    },
+    "tag": {
+      "title": "",
+      "description": ""
+    },
+    "blog": {
+      "title": "",
+      "description": ""
+    }
   }
 }

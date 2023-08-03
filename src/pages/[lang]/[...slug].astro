@@ -9,12 +9,11 @@ import AuthorList from '@/components/author-list.astro'
 // mdx custom
 import Ads from '@/components/mdx/ads.astro'
 import Toc from '@/components/mdx/toc.astro'
+import { filterNotDraftPublished } from '@/repository/blog'
+import { getAuthorsBySlugs } from '@/repository/author'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const pages = await getCollection(
-		'blog',
-		({ data }) => !data.draft && new Date(data.date).getTime() < new Date().getTime()
-	)
+	const pages = await getCollection('blog', filterNotDraftPublished)
 	const paths = pages.map((page) => {
 		const [lang, ...slug] = page.slug.split('/')
 		return { params: { lang, slug: slug.join('/') || undefined }, props: page }
@@ -39,10 +38,10 @@ const formattedDate = page.data.date.toLocaleString(lang, {
 
 const { Content, remarkPluginFrontmatter, headings } = await page.render()
 
-const authors = await getEntries(page.data.authors)
+const authors = await getAuthorsBySlugs('author', page.data.authors)
 ---
 
-<Base title={page.data.title}>
+<Base title={page.data.title} description={page.data.excerpt}>
 	<article class="prose dark:prose-invert mt-12">
 		<h1 class="m-0 text-3xl font-bold leading-10 md:text-4xl md:leading-none">
 			{page.data.title}

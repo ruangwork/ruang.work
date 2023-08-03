@@ -1,29 +1,42 @@
 {
-
-  "title": "Ruang Work | Share to learn, Collaborative space to manifest our existence",
-  "title_template" :   "%s | Ruang Work",
-  "description" :"This site was created as a place to share inspiration, tips, tricks, snippets, hobbies, something interesting in the scope of tech, entertainment, and stuff. such as programming, design, AI, cryptocurrency, books, movies, to product reviews. ",
+  "title": "Ruang Work | Share to learn",
+  "title_template": "%s | Ruang Work",
+  "description": "Ruang.work is a place to share content such as programming, design, AI, cryptocurrency, books, movies, and product reviews.",
   "nav": {
     "home": {
-      "title": "Home",
-      "body": "Learn how Astro works and explore the docs."
+      "title": "Home"
     },
     "blog": {
-      "title": "Blog",
-      "body": "Learn how Astro works and explore the docs."
+      "title": "Blog"
     },
     "snippet": {
-      "title": "Snippets",
-      "body": "Supercharge your projects with new frameworks and libraries."
+      "title": "Snippets"
     },
     "about": {
-      "title": "About",
-      "body": "Supercharge your projects with new frameworks and libraries."
+      "title": "About"
     }
   },
   "section": {
     "blog": "Latest Article",
     "snippet": "Snippets",
     "about": "About"
+  },
+  "meta": {
+    "about": {
+      "title": "Tentang Ruang Work",
+      "description": ""
+    },
+    "snippets": {
+      "title": "Code Snippets make it easier",
+      "description": "The Snippets page is a curated of useful code snippets gathered from various sources. Templates that make it easier to enter repeating code patterns."
+    },
+    "tag": {
+      "title": "",
+      "description": ""
+    },
+    "blog": {
+      "title": "",
+      "description": ""
+    }
   }
 }

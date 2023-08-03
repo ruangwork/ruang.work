@@ -4,7 +4,7 @@ import Base from '@/layouts/base.astro'
 import { getArticles } from '@/repository/blog'
 import type { GetStaticPaths, Page } from 'astro'
 import type { CollectionEntry } from 'astro:content'
-import { changeLanguage } from 'i18next'
+import { changeLanguage, t } from 'i18next'
 
 import ArticleItem from '@/components/article-item.astro'
 import Pagination from '@/components/pagination.astro'
@@ -27,7 +27,7 @@ export type Props = {
 const { page } = Astro.props
 ---
 
-<Base>
+<Base title={t('meta.blog.title')} description={t('meta.blog.description')}>
 	<main class="max-w-7xl mx-auto mb-12">
 		<header class="py-6 text-2xl">Blog</header>
 		<TopicNavigation />

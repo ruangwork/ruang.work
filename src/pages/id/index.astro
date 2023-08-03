@@ -2,10 +2,10 @@
 import { SNIPPETS_PER_PAGE } from '@/constant'
 import Base from '@/layouts/base.astro'
 import { getArticles, recentArticle } from '@/repository/blog'
+import { getSnippets } from '@/repository/snippets'
 import { localizePath } from 'astro-i18next'
 import { Trans } from 'astro-i18next/components'
-import { getCollection } from 'astro:content'
-import i18next, { changeLanguage, t } from 'i18next'
+import { changeLanguage, t } from 'i18next'
 
 import ArticleItem from '@/components/article-item.astro'
 import TopicNavigation from '@/components/topic-navigation.astro'
@@ -15,9 +15,7 @@ changeLanguage('id')
 const articles = await getArticles()
 const sortedArticles = recentArticle(articles)
 
-const snippets = await getCollection('snippets', ({ id }) => {
-	return id.startsWith(`${i18next.language}/`)
-})
+const snippets = await getSnippets()
 ---
 
 <Base>

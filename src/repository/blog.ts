@@ -2,10 +2,13 @@ import { CollectionEntry, getCollection } from 'astro:content'
 
 import i18next from 'i18next'
 
-const filterNotDraftPublished = ({ id, data }: CollectionEntry<'blog'>) =>
+const filterLangNotDraftPublished = ({ id, data }: CollectionEntry<'blog'>) =>
 	id.startsWith(`${i18next.language}/`) && !data.draft && new Date(data.date).getTime() < new Date().getTime()
 
-export const getArticles = async () => await getCollection('blog', filterNotDraftPublished)
+export const filterNotDraftPublished = ({ data }: CollectionEntry<'blog'>) =>
+	!data.draft && new Date(data.date).getTime() < new Date().getTime()
+
+export const getArticles = async () => await getCollection('blog', filterLangNotDraftPublished)
 
 export const recentArticle = (collections: CollectionEntry<'blog'>[]) => {
 	return collections.sort((a, b) => {

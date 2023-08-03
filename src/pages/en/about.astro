@@ -1,23 +1,21 @@
 ---
 import Base from '@/layouts/base.astro'
+import { getAuthors } from '@/repository/author'
 import { Trans } from 'astro-i18next/components'
 import { Image } from 'astro:assets'
-import { getCollection } from 'astro:content'
-import i18next, { changeLanguage, t } from 'i18next'
+import { changeLanguage, t } from 'i18next'
 
 changeLanguage('en')
 
-const authors = await getCollection('author', ({ id }) => {
-	return id.startsWith(`${i18next.language}/`)
-})
+const authors = await getAuthors()
 ---
 
-<Base>
+<Base title={t('meta.about.title')}>
 	<section class="-mx-4 bg-slate-200 py-6 px-4 prose">
 		<h1 class="font-bold text-2xl mb-4">{t('about:welcoming.greeting')}</h1>
 		<Trans i18nKey="welcoming.about" ns="about">
 			<p>
-				Ruang work was created as a place to share inspiration, tips, tricks, snippets, hobbies, something
+				Ruang work was created as a platform to share inspiration, tips, tricks, snippets, hobbies, something
 				interesting in the scope of technology, entertainment, and so on. such as programming, design, AI,
 				cryptocurrency, books, movies, to product reviews.
 			</p>

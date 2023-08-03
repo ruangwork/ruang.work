@@ -3,20 +3,18 @@ import { POSTS_PER_PAGE } from '@/constant'
 import Base from '@/layouts/base.astro'
 import { getArticles } from '@/repository/blog'
 import type { GetStaticPaths, Page } from 'astro'
-import { CollectionEntry, getCollection } from 'astro:content'
-import i18next, { changeLanguage } from 'i18next'
+import type { CollectionEntry } from 'astro:content'
+import { changeLanguage } from 'i18next'
 
 import ArticleItem from '@/components/article-item.astro'
 import Pagination from '@/components/pagination.astro'
 import TopicNavigation from '@/components/topic-navigation.astro'
+import { getTopics } from '@/repository/topics'
 
 changeLanguage('id')
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-	const topics = await getCollection('topics', ({ id }) => {
-		return id.startsWith(`${i18next.language}/`)
-	})
-
+	const topics = await getTopics()
 	const posts = await getArticles()
 
 	return topics.map((topic) => {
@@ -40,7 +38,7 @@ const { topic: current } = Astro.params
 const { Content } = await topic.render()
 ---
 
-<Base>
+<Base title={topic.data.title} description={topic.data.excerpt}>
 	<main class="max-w-7xl mx-auto mb-12">
 		<h1 class="pt-6 mb-2 text-2xl">{topic.data.title}</h1>
 		<div class="prose dark:prose-invert">

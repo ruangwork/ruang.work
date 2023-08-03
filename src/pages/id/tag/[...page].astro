@@ -1,17 +1,16 @@
 ---
 import { POSTS_PER_PAGE } from '@/constant'
 import Base from '@/layouts/base.astro'
+import { getArticles } from '@/repository/blog'
 import type { GetStaticPaths, Page } from 'astro'
 import { localizePath } from 'astro-i18next'
-import { CollectionEntry, getCollection } from 'astro:content'
-import i18next, { changeLanguage } from 'i18next'
+import type { CollectionEntry } from 'astro:content'
+import { changeLanguage, t } from 'i18next'
 
 changeLanguage('id')
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-	const posts = await getCollection('blog', ({ id }) => {
-		return id.startsWith(`${i18next.language}/`)
-	})
+	const posts = await getArticles()
 	// const tags = [...new Set(posts.map((post) => post.data.tags).flat())];
 
 	return paginate(posts, {
@@ -24,13 +23,11 @@ export type Props = {
 }
 
 const { page } = Astro.props
-const posts = await getCollection('blog', ({ id }) => {
-	return id.startsWith(`${i18next.language}/`)
-})
+const posts = await getArticles()
 const tags = [...new Set(posts.map((post) => post.data.tags).flat())]
 ---
 
-<Base>
+<Base title={t('meta.tag.title')} description={t('meta.tag.description')}>
 	<main class="max-w-7xl mx-auto mb-12">
 		<header class="py-6 text-2xl">Blog</header>
 		<div class="flex flex-warp gap-4 max-w-xl">

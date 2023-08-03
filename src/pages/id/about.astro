@@ -1,18 +1,16 @@
 ---
 import Base from '@/layouts/base.astro'
+import { getAuthors } from '@/repository/author'
 import { Trans } from 'astro-i18next/components'
 import { Image } from 'astro:assets'
-import { getCollection } from 'astro:content'
-import i18next, { changeLanguage, t } from 'i18next'
+import { changeLanguage, t } from 'i18next'
 
 changeLanguage('id')
 
-const authors = await getCollection('author', ({ id }) => {
-	return id.startsWith(`${i18next.language}/`)
-})
+const authors = await getAuthors()
 ---
 
-<Base>
+<Base title={t('meta.about.title')}>
 	<section class="-mx-4 bg-slate-200 py-6 px-4 prose">
 		<h1 class="font-bold text-2xl mb-4">{t('about:welcoming.greeting')}</h1>
 		<Trans i18nKey="welcoming.about" ns="about">
@@ -65,9 +63,9 @@ const authors = await getCollection('author', ({ id }) => {
 	<section class="py-6">
 		<p>
 			<em>
-				Mohon berikan masukan mengenai kesalahan dalam artikel ini melalui media sosial di atas atau kolom
-				komentar. Pandangan yang diungkapkan bersifat pribadi dan tidak mewakili pandangan perusahaan atau
-				organisasi yang terafiliasi. Terima kasih.
+				Please provide feedback on any errors in this article via the social media above or the comments
+				section. The views expressed are personal and do not represent the views of the company or affiliated
+				organizations. Thank you.
 			</em>
 		</p>
 	</section>

@@ -1,17 +1,15 @@
 ---
 import Base from '@/layouts/base.astro'
+import { getSnippets } from '@/repository/snippets'
 import { localizePath } from 'astro-i18next'
-import { getCollection } from 'astro:content'
-import i18next, { changeLanguage, t } from 'i18next'
+import { changeLanguage, t } from 'i18next'
 
 changeLanguage('en')
 
-const snippets = await getCollection('snippets', ({ id }) => {
-	return id.startsWith(`${i18next.language}/`)
-})
+const snippets = await getSnippets()
 ---
 
-<Base>
+<Base title={t('meta.snippets.title')} description={t('meta.snippets.description')}>
 	<main class="prose dark:prose-invert">
 		<h1>{t('snippets:greeting')}</h1>
 		<section>

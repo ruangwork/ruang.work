@@ -5,7 +5,7 @@ import i18next, { t } from 'i18next'
 
 import { cn } from '@/lib/utils/cn'
 import LanguageSelector from './lang-selector.astro'
-import ThemeToggle from './toggle-mode'
+import ThemeToggle from './toggle-mode.astro'
 
 const pathname = new URL(Astro.request.url).pathname
 	.split('/')
@@ -36,7 +36,7 @@ const current = pathname ? pathname : ''
 		<a class={cn(current === 'about' ? 'bg-cyan-400' : ' ')} href={localizePath('about')}>
 			{t('nav.about.title')}
 		</a>
-		<ThemeToggle client:load />
+		<ThemeToggle />
 	</nav>
 
 	<nav

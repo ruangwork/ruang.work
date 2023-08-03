@@ -5,10 +5,18 @@ npm create astro@latest -- --template minimal
 
 ```
 
+How schedule in astro static page work
+
+-   set date when to publish
+-   make sure to filter the sitemap and rss feed clear
+-   trigger build hook every 2 day
+-   done
+
 [fazzaamiarso](https://github.com/fazzaamiarso/fazzaamiarso.me-v2)
 
 [engineering blog](https://github.com/EddyVinck/astro-engineering-blog)
 
+-   [x] Schedule Post
 -   [ ] Easy configuration
 -   [x] Minimal styling (make it your own!)
 -   [ ] 100/100 Lighthouse performance
@@ -23,6 +31,7 @@ npm create astro@latest -- --template minimal
 -   [x] Topics
 -   [x] Blog pagination
 -   [x] Dark Mode
+-   [ ] Adding series
 
 [accessible-astro-starter](https://github.com/markteekman/accessible-astro-starter)
 

@@ -8,17 +8,19 @@
 	"endOfLine": "lf",
 	"semi": false,
 	"importOrder": [
-		"^(react/(.*)$)|^(react$)",
-		"^(next/(.*)$)|^(next$)",
+		"^(astro:(.*)$)|^(astro$)",
 		"<THIRD_PARTY_MODULES>",
 		"",
 		"^types$",
-		"^@/types/(.*)$",
-		"^@/config/(.*)$",
 		"^@/lib/(.*)$",
+		"^@/layouts/(.*)$",
+		"^@/repository/(.*)$",
 		"^@/components/(.*)$",
-		"^@/styles/(.*)$",
 		"^[./]"
 	],
-	"plugins": ["prettier-plugin-astro", "@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
+	"importOrderSeparation": true,
+	"importOrderSortSpecifiers": true,
+	"importOrderCaseInsensitive": true,
+	"importOrderGroupNamespaceSpecifiers": true,
+	"plugins": ["prettier-plugin-astro", "@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
 }

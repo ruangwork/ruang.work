@@ -1,12 +1,13 @@
 import { CollectionEntry, getCollection } from 'astro:content'
+
 import i18next from 'i18next'
 
-const filter = ({ id, data }: CollectionEntry<'blog'>) =>
+const filterNotDraftPublished = ({ id, data }: CollectionEntry<'blog'>) =>
 	id.startsWith(`${i18next.language}/`) && !data.draft && new Date(data.date).getTime() < new Date().getTime()
 
-export const getArticles = async () => await getCollection('blog', filter)
+export const getArticles = async () => await getCollection('blog', filterNotDraftPublished)
 
-export const published = (collections: CollectionEntry<'blog'>[]) => {
+export const recentArticle = (collections: CollectionEntry<'blog'>[]) => {
 	return collections.sort((a, b) => {
 		if (!a?.data?.date && !b?.data?.date) {
 			return 0 // neither object has a date property

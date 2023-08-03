@@ -48,9 +48,10 @@ const { headings } = Astro.props
 </style>
 
 <script>
-	const trigger = document.querySelector('nav>button')
+	const trigger = document.querySelector('#toc>button')
 
 	trigger?.addEventListener('click', function () {
+		console.log('click')
 		const tocInner = document.querySelector('#toc__inner')
 		const wrapper = document.querySelector('#wrapper')
 		if (tocInner && wrapper) {
@@ -59,7 +60,8 @@ const { headings } = Astro.props
 				// @ts-ignore
 				wrapper.style.visibility = 'visible'
 				// @ts-ignore
-				wrapper.style.height = `${tocInner.getBoundingClientRect().height}px`
+				wrapper.style.height = `${tocInner.getBoundingClientRect().height} px`
+
 				return
 			}
 			tocInner.classList.add('close')

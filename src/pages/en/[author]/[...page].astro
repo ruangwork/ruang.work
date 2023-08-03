@@ -1,0 +1,94 @@
+---
+import { POSTS_PER_PAGE } from '@/constant'
+import Base from '@/layouts/base.astro'
+import { getArticles } from '@/repository/blog'
+import type { GetStaticPaths, Page } from 'astro'
+import type { CollectionEntry } from 'astro:content'
+import { changeLanguage, t } from 'i18next'
+
+import ArticleItem from '@/components/article-item.astro'
+import Pagination from '@/components/pagination.astro'
+import { getAuthors } from '@/repository/author'
+import Image from 'astro/components/Image.astro'
+
+changeLanguage('en')
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+	const authors = await getAuthors()
+	const posts = await getArticles()
+
+	return authors.map((author) => {
+		const slug = author.slug.split('/')[1]
+		const filteredPosts = posts.filter((post) => post.data.authors.includes(slug))
+		return paginate(filteredPosts, {
+			params: { author: slug },
+			props: { author, slug },
+			pageSize: POSTS_PER_PAGE,
+		})
+	})
+}
+
+export type Props = {
+	page: Page<CollectionEntry<'blog'>>
+	author: CollectionEntry<'author'>
+	slug: string
+}
+
+const { page, author, slug } = Astro.props
+const { Content } = await author.render()
+---
+
+<Base title={author.data.name}>
+	<main class="max-w-7xl mx-auto mb-12">
+		<div class="w-12 h-12 align-baseline border-0 opacity-100" style="inset: 0px;">
+			{
+				author.data.avatar && (
+					<Image
+						src={author.data.avatar}
+						width={author.data.avatar?.width}
+						width={author.data.avatar?.height}
+						alt={author.data.name}
+						class="object-cover w-full h-full"
+					/>
+				)
+			}
+		</div>
+		<h1 class="pt-6 mb-2 text-2xl">{author.data.name}</h1>
+		<section
+			class="scrollbar-hide relative flex w-full snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth whitespace-nowrap py-6">
+			{
+				author.data.linkedin ? (
+					<a
+						class="flex items-center font-semibold"
+						rel="noreferrer"
+						target="_blank"
+						href={author.data.linkedin}>
+						<span class="text-slate-700 dark:text-slate-400">linkedin</span>
+					</a>
+				) : null
+			}
+			{
+				author.data.github ? (
+					<a
+						class="flex items-center font-semibold"
+						rel="noreferrer"
+						target="_blank"
+						href={author.data.github}>
+						<span class="text-slate-700 dark:text-slate-400">github</span>
+					</a>
+				) : null
+			}
+		</section>
+		<div class="prose dark:prose-invert">
+			<Content />
+		</div>
+
+		<section class="grid gap-4">
+			<h2 class="py-6 text-2xl">{t('section.blog')} from <span class="font-medium">{slug}</span></h2>
+			<div class="grid grid-flow-dense grid-cols-1 gap-8">
+				<ArticleItem posts={page.data} />
+			</div>
+			<Pagination page={page} />
+		</section>
+	</main>
+</Base>

@@ -33,7 +33,7 @@ export default defineConfig({
 			},
 			filter: (page) => {
 				// Regular expression to match URLs with numbers after "/blog/" or "/tag/"
-				const blogTagRegex = /\/(blog|tag)\/\d+/
+				const blogTagRegex = /\/(blog|tag|inurhuda00|anonymous)\/\d+/
 
 				if (blogTagRegex.test(page)) {
 					return false

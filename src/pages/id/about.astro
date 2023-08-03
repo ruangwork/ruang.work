@@ -1,5 +1,6 @@
 ---
 import Base from '@/layouts/base.astro'
+import { localizePath } from 'astro-i18next'
 import { getAuthors } from '@/repository/author'
 import { Trans } from 'astro-i18next/components'
 import { Image } from 'astro:assets'
@@ -15,7 +16,7 @@ const authors = await getAuthors()
 		<h1 class="font-bold text-2xl mb-4">{t('about:welcoming.greeting')}</h1>
 		<Trans i18nKey="welcoming.about" ns="about">
 			<p>
-				Ruang work was created as a place to share inspiration, tips, tricks, snippets, hobbies, something
+				Ruang work was created as a platform to share inspiration, tips, tricks, snippets, hobbies, something
 				interesting in the scope of technology, entertainment, and so on. such as programming, design, AI,
 				cryptocurrency, books, movies, to product reviews.
 			</p>
@@ -30,14 +31,15 @@ const authors = await getAuthors()
 
 	<section>
 		<h1 class="py-6 text-2xl">{t('about:section.people.title')}</h1>
-		<div class="leading-4 align-baseline border-0 text-slate-600">
+		<div class="leading-4 align-baseline border-0">
 			<ul
 				class="flex flex-wrap -mx-2 text-2xl tracking-normal leading-relaxed align-baseline border-0 lg:-mx-6 md:-mx-4">
 				{
 					authors.map((author) => (
 						<li class="px-2 mb-12 w-1/2 text-base leading-6 text-left align-baseline border-0 lg:mb-10 lg:px-6 sm:w-1/3 md:px-4">
 							<div class="overflow-hidden relative px-0 pb-0 mt-0 mb-4 h-0 align-baseline border-0 lg:mb-6 pt-[96%]">
-								<div
+								<a
+									href={localizePath(`${author.slug}`)}
 									class="absolute w-full h-full align-baseline border-0 opacity-100"
 									style="inset: 0px;">
 									{author.data.avatar && (
@@ -49,7 +51,7 @@ const authors = await getAuthors()
 											class="object-cover  w-full h-full"
 										/>
 									)}
-								</div>
+								</a>
 							</div>
 
 							<p class="tracking-wide align-baseline border-0">{author.data.name}</p>

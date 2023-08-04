@@ -1,0 +1,109 @@
+---
+title: 'Understanding the Concept of Yield in PHP'
+date: 2023-08-08
+authors:
+    - anonymous
+excerpt: 'explore the fundamental aspects of yield in PHP, examining its purpose and utility as a generator function'
+topics: ['coding']
+tags:
+    - php
+    - yield
+    - generator-function
+---
+
+## What is Yield in PHP?
+
+The yield keyword in PHP serves as a tool for constructing generator functions, which act as iterators, readily accessible with a foreach loop. This ingenious feature grants the yield keyword the ability to contribute a specific value during an iteration of the loop, thus enriching the overall functionality.
+
+## Yield and Its Essence
+
+Yield plays a pivotal role in a generator function, as elaborated in the PHP manual on generator syntax:
+
+> "The heart of a generator function is the yield keyword. In its simplest form, a yield statement looks much like a return statement, except that instead of stopping execution of the function and returning, yield instead provides a value to the code looping over the generator and pauses execution of the generator function."[^1]
+
+[^1]: [Data from a generator function](https://www.php.net/manual/en/language.generators.syntax.php).
+
+### Understanding Generator Functions[^2]
+
+[^2]: [What does yield mean in PHP?](https://stackoverflow.com/questions/17483806/what-does-yield-mean-in-php).
+
+Generator functions represent a more streamlined and efficient approach to constructing iterators. By defining a function, such as the example below named xrange, it becomes possible to calculate and furnish values while concurrently iterating over them:
+
+```php
+function xrange($min, $max) {
+    for ($i = $min; $i <= $max; $i++) {
+        yield $i;
+    }
+}
+```
+
+```php
+foreach (xrange(1, 10) as $key => $value) {
+    echo "$key => $value", PHP_EOL;
+}
+```
+
+This would create the following output:
+
+```bash
+0 => 1
+1 => 2
+...
+9 => 10
+```
+
+An additional aspect worth noting is the ability to control the `$key` within the foreach loop by using:
+
+`yield $someKey => $someValue;`
+
+Here, `$someKey` can be any desired value for `$key`, while `$someValue` serves as the value for `$value`. In this context, `$i` represents the appropriate variable for the example at hand.
+
+An interesting fact to consider is that internally, sequential integer keys are paired with the yielded values, akin to a non-associative array. Furthermore, it is plausible to set yield values with specific keys.
+
+### Comparing Generator Functions to Regular Functions
+
+One might question why PHP's native `range` function is not sufficient to achieve the same output. Indeed, the outcome may be identical, but the process adopted sets them apart.
+
+When employing the `range` function, PHP will execute the function, construct the entire array of numbers in memory, and return the entire array to the foreach loop for subsequent iteration. Essentially, the foreach loop operates directly on the array. Visualize it as receiving a package in the mail; the delivery personnel hands over the package and departs, leaving you to unwrap and access the contents.
+
+Conversely, when using a generator function, PHP steps into the function and executes it until reaching the end or encountering a yield keyword. When encountering a yield, PHP returns the current value to the outer loop and pauses the generator function. Subsequently, it resumes from the yield point and continues until the specified `$max` is reached in the example. This interaction between the `foreach` loop and the generator function is akin to a game of ping pong, with each side exchanging control.
+
+## Real-world scenario where the yield keyword in PHP can be effectively used: 'generating a Fibonacci sequence.'
+
+The Fibonacci sequence is a series of numbers in which each number is the sum of the two preceding ones, usually starting with 0 and 1. A generator function can be employed to create an iterator that generates Fibonacci numbers on-the-fly, without the need to store the entire sequence in memory.
+
+```php
+function fibonacciGenerator($length) {
+    $a = 0;
+    $b = 1;
+
+    for ($i = 0; $i < $length; $i++) {
+        yield $a; // Yield the current Fibonacci number
+
+        // Calculate the next Fibonacci number
+        $temp = $a + $b;
+        $a = $b;
+        $b = $temp;
+    }
+}
+
+// Generating and displaying the first 10 Fibonacci numbers
+foreach (fibonacciGenerator(10) as $fibNumber) {
+    echo $fibNumber . ' ';
+}
+```
+
+Output:
+
+```
+0 1 1 2 3 5 8 13 21 34
+
+```
+
+In this example, we have a generator function called `fibonacciGenerator`, which takes the desired length of the Fibonacci sequence as an argument. Inside the function, we initialize two variables, `$a` and `$b`, representing the first two numbers of the sequence (0 and 1).
+
+The `for` loop iterates up to the desired length, and during each iteration, it yields the current Fibonacci number `$a`. Then, it calculates the next Fibonacci number and updates the variables `$a` and `$b` accordingly.
+
+When we use the foreach loop to iterate over the generator, the Fibonacci numbers are generated on-the-fly without precomputing the entire sequence. This makes it memory-efficient and suitable `for` situations where generating large sequences is required.
+
+Using yield in this context allows us to work with an infinite sequence as well, simply by omitting the upper limit in the `for` loop. For example, we can use `foreach (fibonacciGenerator(PHP_INT_MAX) as $fibNumber)` to generate Fibonacci numbers indefinitely until PHP's maximum integer limit is reached.

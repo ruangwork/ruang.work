@@ -1,0 +1,136 @@
+---
+title: 'Memahami Konsep Yield dalam PHP'
+date: 2023-08-08
+authors:
+    - anonymous
+excerpt: 'Eksplore aspek fundamental dari yield dalam PHP, memeriksa tujuan dan kegunaannya sebagai fungsi generator'
+topics: ['coding']
+tags:
+    - php
+    - yield
+    - generator-function
+---
+
+## Apa itu yield di PHP?
+
+kata kunci `yield` berfungsi sebagai alat untuk membangun fungsi generator, yang bertindak sebagai iterator, yang dapat di akses melalui perulangan.
+
+ketika menggunakan `yield` nilai tidak di simpan kedalam variable, namun langsung diberikan ke pemanggil (iterator)
+
+contoh penggunaan yield
+
+```php
+function generateNumbers() {
+    yield 1;
+    yield 2;
+    yield 3;
+}
+```
+
+```php
+foreach (generateNumbers() as $number) {
+    echo $number . ' ';
+}
+
+```
+
+nah karna yield ini dapat di akses melalui mekanisme iterator, dalam contoh ini menggunakan `foreach`. Maka disini setiap `$yield` yang didefinisikan di fungsi akan langsung diberikan kepada `$number` dan langsung dapat digunakan.
+
+Intinya adalah yield ini _seperti menyimpan_ nilai yang nanti dapat diakses menggunakan mekanisme iterator. gitu.
+
+## Yield and Its Essence
+
+Yield meminkan peran penting dalam fungsi generator, seperti yang dijelaskan di manual PHP:
+
+> "The heart of a generator function is the yield keyword. In its simplest form, a yield statement looks much like a return statement, except that instead of stopping execution of the function and returning, yield instead provides a value to the code looping over the generator and pauses execution of the generator function."[^1]
+
+[^1]: [Data from a generator function](https://www.php.net/manual/en/language.generators.syntax.php).
+
+### Lalu? apa yang dimaksud Generator Functions[^2]
+
+[^2]: [What does yield mean in PHP?](https://stackoverflow.com/questions/17483806/what-does-yield-mean-in-php).
+
+Fungsi generator merupakan pendekatan yang lebih efisien untuk membangun iterator, Dengan mendefinisikan fungsi seperti contoh dibawah ini yang bernama `xrange`
+
+```php
+function xrange($min, $max) {
+    for ($i = $min; $i <= $max; $i++) {
+        yield $i;
+    }
+}
+```
+
+```php
+foreach (xrange(1, 10) as $key => $value) {
+    echo "$key => $value", PHP_EOL;
+}
+```
+
+maka output yang dihasilkan:
+
+```bash
+0 => 1
+1 => 2
+...
+9 => 10
+```
+
+Dari sini dapat di sederhanakan bahwa `xrange` mengenerate nilai dari parameter `$min` dan `$max`. Kemudian nilai dari hasil fungsi `xrange` di simpan kedalam yield.
+
+sehingga pada implementasinya di `foreach` nilai yang dihasilkan berupa sequence 1-10 digunakan untuk menghasilkan keluaran yang ada dengan `$key` yang dihasilkan dari `foreach` dan `$value` dari sequence `xrange` .
+
+### Membandingkan Fungsi Generator dengan Fungsi Biasa
+
+Orang mungkin mempertanyakan mengapa fungsi `range` asli PHP tidak cukup untuk mencapai hasil yang sama. Memang, hasilnya mungkin sama, tetapi proses yang digunakan membedakannya.
+
+Ketika menggunakan fungsi `range`, PHP akan mengeksekusi fungsi tersebut, membangun seluruh larik angka dalam memori, dan mengembalikan seluruh larik ke perulangan foreach untuk perulangan berikutnya.
+
+Pada dasarnya, perulangan foreach beroperasi secara langsung pada larik. Bayangkan seperti menerima paket melalui pos; petugas pengiriman menyerahkan paket tersebut dan pergi, meninggalkan Anda untuk membuka dan mengakses isinya.
+
+Sebaliknya, ketika menggunakan fungsi generator, PHP masuk ke dalam fungsi dan mengeksekusinya hingga mencapai akhir atau menemukan kata kunci hasil. Ketika menemukan hasil, PHP mengembalikan nilai saat ini ke perulangan luar dan menghentikan fungsi generator.
+
+Selanjutnya, fungsi tersebut dilanjutkan dari titik hasil dan berlanjut hingga `$max` yang ditentukan tercapai dalam contoh. Interaksi antara perulangan `foreach` dan fungsi generator mirip dengan permainan pingpong, dengan masing-masing pihak saling bertukar kontrol.
+
+## Generating a Fibonacci sequence menggunakan yield
+
+Deret Fibonacci adalah serangkaian angka di mana setiap angka adalah jumlah dari dua angka sebelumnya, biasanya dimulai dengan 0 dan 1. Fungsi generator dapat digunakan untuk membuat iterator yang menghasilkan angka Fibonacci dengan cepat, tanpa perlu menyimpan seluruh sequence dalam memori.
+
+```php
+function fibonacciGenerator($length) {
+    $a = 0;
+    $b = 1;
+
+    for ($i = 0; $i < $length; $i++) {
+        yield $a; // Yield the current Fibonacci number
+
+        // Calculate the next Fibonacci number
+        $temp = $a + $b;
+        $a = $b;
+        $b = $temp;
+    }
+}
+
+// Generating and displaying the first 10 Fibonacci numbers
+foreach (fibonacciGenerator(10) as $fibNumber) {
+    echo $fibNumber . ' ';
+}
+```
+
+Output:
+
+```
+0 1 1 2 3 5 8 13 21 34
+
+```
+
+Pada contoh ini, kita memiliki fungsi generator yang disebut `fibonacciGenerator`, yang mengambil panjang squence Fibonacci yang diinginkan sebagai argumen. Di dalam fungsi tersebut, kita menginisialisasi dua variabel, `$a` dan `$b`, yang mewakili dua angka pertama dari squence (0 dan 1).
+
+Perulangan `for` mengulang hingga panjang yang diinginkan, dan pada setiap perulangan, menghasilkan angka Fibonacci saat ini, yaitu `$a`. Kemudian, ia menghitung angka Fibonacci berikutnya dan memperbarui variabel `$a` dan `$b` yang sesuai.
+
+Ketika kita menggunakan perulangan foreach untuk mengulangi generator, angka Fibonacci dihasilkan dengan cepat tanpa menghitung seluruh urutan.
+
+> Hal ini membuatnya hemat memori dan cocok untuk situasi di mana menghasilkan squence yang besar.
+
+Menggunakan hasil dalam konteks ini memungkinkan kita untuk bekerja dengan squence tak terbatas juga, cukup dengan menghilangkan batas atas dalam perulangan `for`.
+
+Sebagai contoh, kita dapat menggunakan `foreach (fibonacciGenerator(PHP_INT_MAX) as $fibNumber) untuk menghasilkan angka Fibonacci tanpa batas hingga batas integer maksimum PHP tercapai.

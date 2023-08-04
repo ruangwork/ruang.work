@@ -1,0 +1,90 @@
+---
+title: 'Easy Deploy Astro Dengan Cloudflare Page'
+date: 2023-08-05
+authors:
+    - inurhuda00
+excerpt: 'easily deploy astro to cloudflare pages'
+topics: ['coding']
+tags:
+    - cloudflare
+    - astro
+---
+
+[Astro](http://astro.build) is an all-in-one web framework for building fast, content-focused websites. By default, Astro builds websites that have zero JavaScript runtime code.
+
+## Multi-Page Application (MPA)
+
+A Multi-Page Application (MPA) represents an intricate web architecture, encompassing multiple HTML pages predominantly served from a centralized server. Each time a user navigates to a different page, the browser sends a request to the server to fetch the corresponding HTML page. One prominent exemplar of an MPA framework is Astro.
+
+Additionally, traditional MPA frameworks comprise well-established platforms such as Ruby on Rails, Python Django, PHP Laravel, WordPress, Joomla, Drupal, as well as static site builders like Eleventy or Hugo.
+
+## Embracing the Server-First Approach
+
+Astro embraces a server-side rendering approach, aligning with established practices of traditional server-side frameworks like PHP, WordPress, Laravel, and Ruby on Rails.
+
+This eliminates the need to master a secondary server-side language, as Astro maintains the simplicity of HTML, CSS, and JavaScript (or TypeScript).
+
+In contrast, modern JavaScript web frameworks like Next.js, SvelteKit, Nuxt, Remix, and others primarily rely on client-side rendering, using server-side rendering for performance optimization.
+
+While this Single Page App (SPA) model offers advantages, it introduces complexity and performance tradeoffs that negatively impact page performance, especially for content-centric websites where swift first-load performance is crucial.
+
+# Benefits of Deploying Static Sites with Cloudflare Pages
+
+Deploying static sites with Cloudflare Pages offers several significant benefits, making it an attractive choice for website hosting and delivery:
+
+-   **Lightning-Fast Performance**: Cloudflare Pages leverages Cloudflare's global content delivery network (CDN) to serve your static site from multiple edge locations worldwide. This reduces latency and ensures that visitors experience rapid page loading times, enhancing user satisfaction and engagement.
+
+-   **Scalability**: Cloudflare's infrastructure is highly scalable, capable of handling sudden traffic spikes and high user loads without compromising performance.
+
+-   **Global Reach**: With an extensive network of edge servers, Cloudflare Pages can serve your static site to visitors from any part of the world.
+
+-   **Security**: Cloudflare is renowned for its robust security features. By hosting your static site on Cloudflare Pages, you automatically benefit from their DDoS protection, web application firewall (WAF), SSL encryption, and other security measures, safeguarding your site from malicious attacks.
+
+-   **Continuous Deployment**: Cloudflare Pages integrates seamlessly with your Git repository. Each time you push updates to your codebase, Cloudflare Pages automatically rebuilds and deploys your static site.
+
+-   **Custom Domains and HTTPS**: Cloudflare Pages allows you to use your custom domain name for your static site, giving it a professional and branded appearance. Additionally, Cloudflare provides free SSL certificates, ensuring that your site is served securely over HTTPS.
+
+-   **Zero Configuration**: Cloudflare Pages eliminates the need for complex server setup and configuration.
+
+-   **Cost-Effective**: For many small to medium-sized websites, hosting on Cloudflare Pages can be more cost-effective than traditional hosting options. Since it is designed for static sites, you don't have to pay for resources you don't need, making it a budget-friendly choice.
+
+-   **Developer-Friendly**: Cloudflare Pages offers a straightforward and developer-friendly workflow.
+
+-   **Analytics and Insights**: Cloudflare Pages provides built-in analytics and insights to help you track website traffic, monitor performance, and understand user behavior, enabling you to make data-driven decisions for site optimization.
+
+In summary, deploying static sites with Cloudflare Pages empowers you with exceptional performance, security, scalability, and ease of use, allowing you to focus on creating outstanding web experiences for your audience.[^1]
+
+[^1]: [Cloudflare Pages](https://developers.cloudflare.com/pages/) documentation
+
+# Prerequisites
+
+Before proceeding, ensure the following prerequisites are met:
+
+-   Possess a GitHub or other Source Code Management (SCM) account.
+-   Have an account on [cloudflare.com](http://cloudflare.com).
+-   Already have an Astro project, ready for deployment.
+
+_If you don't have one yet, you can follow the step-by-step tutorial to [create a blog](https://docs.astro.build/en/tutorial/0-introduction/)_.
+
+## Deploying with Cloudflare Pages
+
+To deploy your site to Cloudflare Pages, follow these steps:[^2]
+
+1. Log in to the Cloudflare dashboard and select your account.
+2. In Account Home, navigate to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+
+![Workers & Pages](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/worker-and-page.png 'Workers & Pages')
+![Create application](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/create-application.png 'Create application')
+
+3. If you haven't done so already, authorize Cloudflare to access your GitHub account.
+
+![Pages > Connect to Git](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/connect-git.png 'Pages > Connect to Git')
+![Select Repository](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/select-repository.png 'Select Repository')
+![Select Framework](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/select-framework-preset.png 'Select Framework')
+![Save & Deploy ](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/save-and-deploy.png 'Save & Deploy ')
+
+4. This access is essential for Cloudflare to monitor and deploy your projects from the source. If you prefer, you can restrict access to specific repositories; however, you'll need to manually update this list within your GitHub settings when adding more repositories to Cloudflare Pages.
+
+5. Select the newly created GitHub repository and, in the Set up builds and deployments section, provide the required information.
+
+[^2]: [Deploy an Astro site](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/#use-bindings-in-your-astro-application)

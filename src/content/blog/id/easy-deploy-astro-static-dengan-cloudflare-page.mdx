@@ -1,0 +1,89 @@
+---
+title: 'Cara Deploy Astro Ke Cloudflare Page'
+date: 2023-08-05
+authors:
+    - inurhuda00
+excerpt: 'mudahnya deploy astro ke cloudflare pages'
+topics: ['coding']
+tags:
+    - cloudflare
+    - astro
+---
+
+[Astro](http://astro.build) adalah all-in-one web framework untuk membangun situs web yang cepat dan berfokus pada konten. Secara default, Astro membangun situs web yang tidak memiliki kode runtime JavaScript.
+
+Lebih jelasnya lagi bisa di check di [dokumentasi](https://docs.astro.build/en/getting-started/)
+
+## Multi-Page Application (MPA)
+
+Multi-Page Application (MPA) mewakili arsitektur web yang rumit, mencakup beberapa halaman HTML yang sebagian besar dilayani dari server terpusat. Setiap kali pengguna menavigasi ke halaman yang berbeda, browser mengirimkan permintaan ke server untuk mengambil halaman HTML yang sesuai.
+
+Contoh dari tradisional frameworks MPA yang sudah _well-established_ seperti Ruby on Rails, Python Django, PHP Laravel, WordPress, Joomla, Drupal, juga static page builder seperti Eleventy atau Hugo.
+
+## Pendekatan Server-First
+
+Astro menggunakan pendekatan server-side rendering, seperti praktik yang sudah mature di tradisional server-side frameworks seperti PHP, WordPress, Laravel, dan Ruby on Rails.
+
+Membuat penggunaan astro dapat mempertahankan kesederhanaan HTML, CSS, dan JavaScript dan menghilangkan kebutuhan menguasai secondary server-side language.
+
+# Keuntungan Deploy static sites di Cloudflare pages
+
+Deploy static sites dengan Cloudflare Pages menawarkan beberapa keuntungan yang menarik sebagai web hosting dan delevery web:
+
+-   **Performance Cepat**: Cloudflare Pages menggunakan content delivery netwoek (CDN) untuk serve statis site dari berbagai _edge locations_. sehingga nantinya akan mengurangi latensi dan memastikan halaman yang dimuat akan cepat.
+
+-   **Scalability**: Sangat fleksible dengan traffic yang banyak dan pengguna yang tiba-tiba tinggi tanpa mengurangi performa.
+
+-   **Global Reach**: Cakupan global.
+
+-   **Security**: Dengan meng-host statis pages di Cloudflare, akan secara otomatis mendapatkan perlindungan DDos, web application farewall (WAF), SSL encryption, dan banyak lagi.
+
+-   **Continuous Deployment**: Terintegrasi dengan repository. Setiap pembaharuan atau push update di github, maka Cloudflare Pages akan otomatis build dan deploy static page.
+
+-   **Custom Domains and HTTPS**: Mulai dari deploy, hingga manage dns dapat dilakukan di Cloudflare. Sehingga project konfigurasi dapat di tangani secara centralize.
+
+-   **Zero Configuration**: Cloudflare page menghilangkan konfigurasi yang rumit.
+
+-   **Cost-Effective**: Static page gratis. aman.
+
+-   **Developer-Friendly**: straightforward dan developer friendly
+
+-   **Analytics and Insights**: mendapatkan analytic dan insights bawaan.
+
+Singkatnya, deploy menggunakan Cloudflare pages akan membantu dari performance, security, scalability, dan yang paling penting, gampang.[^1]
+
+[^1]: [Cloudflare Pages](https://developers.cloudflare.com/pages/) documentation
+
+# Persyaratan untuk deploy astro di Cloudflare Pages
+
+Pastikan prasyarat berikut terpenuhi
+
+-   Punya akun github atau git. Cloudflare baru support itu. atau Source Code management (SCM) yang lain. kalau sudah support.
+-   Punya akun di [cloudflare.com](http://cloudflare.com). kalau belum tinggal register.
+-   Punya project Astro yang sudah siap di deploy.
+
+_Jika belum punya, bisa mengikuti tutorial dari astro di [create a blog](https://docs.astro.build/en/tutorial/0-introduction/)_.
+
+## Deploying dengan Cloudflare Pages
+
+Untuk mendeploy situs ke Cloudflare, berikut langkah-langkahnya: [^2]
+
+1. Login in ke cloudflare dashboard dan pilih akunmu.
+2. Di menu utama akunmu, Pilih **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+
+![Workers & Pages](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/worker-and-page.png 'Halaman Workers & Pages')
+![Create application](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/create-application.png 'Halaman Create application')
+
+3. Silahkan authorize Cloudflare untuk mengakses akun Github kamu.
+
+![Pages > Connect to Git](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/connect-git.png 'Pages > Connect to Git')
+![Select Repository](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/select-repository.png 'Select Repository')
+
+4. Akses ini sangat penting bagi Cloudflare untuk memantau dan menerapkan proyekmu dari _source_. Jika mau, Kamu dapat membatasi akses ke repositori tertentu. namun, perlu set ulang ini secara manual dalam pengaturan GitHub saat menambahkan lebih banyak repositori ke Halaman Cloudflare.
+
+![Select Framework](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/select-framework-preset.png 'Select Framework')
+![Save & Deploy ](@/assets/blog/easy-deploy-astro-static-dengan-cloudflare-page/save-and-deploy.png 'Save & Deploy ')
+
+5. Pilih Project yang mau di deploy. Pilih **Select Framework** > **Save & Deploy**. Done.
+
+[^2]: [Deploy an Astro site](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/#use-bindings-in-your-astro-application)

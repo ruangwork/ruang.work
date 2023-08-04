@@ -1,3 +1,4 @@
+import { remarkFigureCaption } from './src/lib/remark/remark-figure-caption'
 import { remarkFirstCode } from './src/lib/remark/remark-first-code'
 import { remarkReadingTime } from './src/lib/remark/remark-reading-time'
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
@@ -54,7 +55,7 @@ export default defineConfig({
 		astroI18next(),
 		tailwind(),
 		mdx({
-			remarkPlugins: [remarkExpressiveCode, remarkReadingTime, remarkFirstCode],
+			remarkPlugins: [remarkExpressiveCode, remarkReadingTime, remarkFirstCode, remarkFigureCaption],
 			syntaxHighlight: 'shiki',
 			extendMarkdownConfig: true,
 			rehypePlugins: [

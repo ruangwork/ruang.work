@@ -1,4 +1,6 @@
 ---
+import '@/styles/global.css'
+
 import { HeadHrefLangs } from 'astro-i18next/components'
 import i18next, { t } from 'i18next'
 
@@ -39,7 +41,7 @@ const props = {
 		<HeadHrefLangs />
 		<Meta {...props} />
 	</head>
-	<body class="max-w-lg px-4 mx-auto dark:bg-slate-900 dark:text-slate-50 transition-colors">
+	<body>
 		<Navbar />
 		<main>
 			<slot />

@@ -7,14 +7,20 @@ import i18next, { t } from 'i18next'
 import Footer from '@/components/footer.astro'
 import Meta from '@/components/meta.astro'
 import Navbar from '@/components/navbar.astro'
+import { cn } from '@/lib/utils/cn'
 
 interface Props {
 	title?: string | null
 	description?: string | null
 	image?: string
+	class?: string
+	frontmatter?: Record<string, any>
 }
 
-let { title, description } = Astro.props
+let { title, description, frontmatter } = Astro.props
+
+title = frontmatter?.title ? frontmatter.title : title
+description = frontmatter?.description ? frontmatter.description : description
 
 const props = {
 	title: title ? t('title_template').replace('%s', title) : t('title'),
@@ -43,7 +49,7 @@ const props = {
 	</head>
 	<body>
 		<Navbar />
-		<main>
+		<main class:list={[{ 'prose dark:prose-invert': frontmatter?.title }]}>
 			<slot />
 		</main>
 

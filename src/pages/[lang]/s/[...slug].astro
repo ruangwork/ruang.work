@@ -5,6 +5,8 @@ import { changeLanguage } from 'i18next'
 
 // mdx custom
 import Ads from '@/components/mdx/ads.astro'
+import AuthorList from '@/components/author-list.astro'
+import { getAuthorsBySlugs } from '@/repository/author'
 
 export async function getStaticPaths() {
 	const pages = await getCollection('snippets')
@@ -30,14 +32,33 @@ const formattedDate = page.data.date.toLocaleString(lang, {
 })
 
 const { Content, remarkPluginFrontmatter } = await page.render()
+const authors = await getAuthorsBySlugs('author', [page.data.author])
 ---
 
 <Base title={page.data.title} description={page.data.excerpt}>
 	<div class="grid grid-cols-4 gap-x-8">
 		<article class="prose dark:prose-invert col-span-4">
-			<h1>{page.data.title}</h1>
-			<h5>{remarkPluginFrontmatter.minutesRead}</h5>
-			<p>by {page.data.author} • {formattedDate}</p>
+			<h1 class="m-0 text-3xl font-bold leading-10 md:text-4xl md:leading-none">
+				{page.data.title}
+			</h1>
+			<div class="mt-4 mb-6 inline-flex flex-col gap-2 md:flex-row md:items-center">
+				<div
+					class="flex w-auto cursor-pointer items-center rounded-full border border-solid border-gray-800 bg-black px-3 py-2">
+					<div class="not-prose flex items-center text-slate-100">
+						<AuthorList authors={authors} />
+					</div>
+				</div>
+				<div class="mt-2 flex h-full items-center gap-x-2 md:m-0 text-xs">
+					<span class="hidden text-slate-500 md:my-0 md:block">•</span>
+					<time datetime={formattedDate} aria-label={formattedDate} class='text-slate-400"'>
+						{formattedDate}
+					</time>
+					<span class='text-slate-500"'>•</span>
+					<p class="m-0 text-slate-400">
+						{remarkPluginFrontmatter.minutesRead}
+					</p>
+				</div>
+			</div>
 			<Content components={{ Ads }} />
 		</article>
 	</div>

@@ -19,7 +19,7 @@ const { posts } = Astro.props
 			const { title, date, excerpt } = post.data
 			return (
 				<article class="flex flex-col sm:flex-row">
-					<a href={localizePath(`${post.slug}`)}>
+					<a href={localizePath(`${post.slug}`)} class="mt-2">
 						{post.data.cover && (
 							<Image
 								src={post.data.cover}

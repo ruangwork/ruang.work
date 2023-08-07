@@ -21,7 +21,7 @@ How schedule in astro static page work
 -   [x] Minimal styling (make it your own!)
 -   [ ] 100/100 Lighthouse performance
 -   [x] SEO-friendly with canonical URLs and OpenGraph data
--   [ ] Uses astro:assets for optimized images
+-   [x] Uses astro:assets for optimized images
 -   [x] Sitemap support
 -   [x] RSS Feed support
 -   [x] Markdown & MDX support
@@ -31,12 +31,12 @@ How schedule in astro static page work
 -   [x] Topics
 -   [x] Blog pagination
 -   [x] Dark Mode
--   [ ] Adding series
+-   [x] Adding series
 
 [accessible-astro-starter](https://github.com/markteekman/accessible-astro-starter)
 
 -   [x] Tailwind CSS support
--   [ ] Prettier integration with `prettier-plugin-astro` and `prettier-plugin-tailwind`
+-   [x] Prettier integration with `prettier-plugin-astro` and `prettier-plugin-tailwind`
 -   [x] Semantic Tag
 
 Utility pages

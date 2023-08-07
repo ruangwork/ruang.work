@@ -1,0 +1,15 @@
+---
+title: 'menambahkan kunci privat SSH ke Keychain agar tersedia secara otomatis saat ssh'
+date: 2023-05-24
+author: inurhuda00
+---
+
+Pada OSX, perintah asli `ssh-add` memiliki argumen khusus untuk menyimpan kata sandi private key di Keychain OSX, yang berarti key tesebut akan digunakan saat login ssh[^source]
+
+## Store passphrase in the Keychain
+
+```bash
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+```
+
+[^source]: [How can I permanently add my SSH private key to Keychain so it is automatically available to ssh?](https://apple.stackexchange.com/questions/48502/how-can-i-permanently-add-my-ssh-private-key-to-keychain-so-it-is-automatically)

@@ -1,0 +1,15 @@
+---
+title: 'Add SSH private key to Keychain to be automatically available when ssh'
+date: 2023-05-24
+author: inurhuda00
+---
+
+On OSX, the native ssh-add command has a special argument to save the private key's passphrase in the OSX Keychain, which means that your normal login will unlock it for use with ssh[^source]
+
+## Store passphrase in the Keychain
+
+```bash
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+```
+
+[^source]: [How can I permanently add my SSH private key to Keychain so it is automatically available to ssh?](https://apple.stackexchange.com/questions/48502/how-can-i-permanently-add-my-ssh-private-key-to-keychain-so-it-is-automatically)

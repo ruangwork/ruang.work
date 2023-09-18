@@ -28,10 +28,40 @@ untuk membuat alias dengan git dapat dilakukan dengan perintah:
 git config --global alias.glod "log --graph --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset\""
 ```
 
-kita dapat memanggil alias dari git dengan perintah:
+### Membuat Alias `glod` di terminal
+
+Untuk membuat alias di terminal, dapat dengan mengubah profile configurasi shell tergantung apa yang digunakan.
+
+1. Edit config (menggunakan bash)
+
+```bash
+vim ~/.zshrc
+```
+
+2. Tambahkan alias dan simpan
+
+```bash
+alias ll='ls -l'
+```
+
+3. mengaktifkan perubahan profile
+
+```bash
+source ~/.zshrc
+```
+
+## Penggunaan
+
+alias di dengan git
 
 ```bash
 git glod
+```
+
+alias di shell
+
+```bash
+glod
 ```
 
 maka history dari commit akan muncul dengan format yang lebih rapi dan informatif

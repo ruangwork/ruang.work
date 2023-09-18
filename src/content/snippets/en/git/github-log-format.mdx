@@ -1,0 +1,37 @@
+---
+title: 'Github log format'
+date: 2023-08-07
+author: inurhuda00
+---
+
+```bash
+git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset"
+```
+
+### Overview
+
+-   `-git log` is a command to view the commit history of a Git repository.
+-   `--graph` displays a graph of commits, which makes it easy to see the relationship between commits.
+-   `--pretty` is used to set the display format of the commit history.
+-   `"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset"` is the display format used for each commit. This format includes:
+    -   `%Cred%h%Creset` to display the commit hash in red.
+    -   `-%C(auto)%d%Creset` to display the branch and tag in the convention color.
+    -   `%s` to display the commit message.
+    -   `%Cgreen(%ad)` to display the commit date in green.
+    -   `%C(bold blue)<%an>%Creset` to display the committer name in bold blue.
+
+### Create Alias `glod` with git
+
+To create an alias using Git, use the command:
+
+```bash
+git config --global alias.glod "log --graph --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset\""
+```
+
+We can then call the alias from within git by using the command:
+
+```bash
+git glod
+```
+
+The commit history will be presented in a clearer and more informative layout.

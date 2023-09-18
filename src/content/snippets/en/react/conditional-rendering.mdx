@@ -1,0 +1,45 @@
+---
+title: React Conditional Rendering
+date: 2023-09-18
+author: inurhuda00
+---
+
+## Conditional Rendering with Data
+
+```tsx
+const ProgressStep = (step: Step) => ({
+	current: <CurrentComponent step={step} />,
+	complete: <CompleteComponent step={step} />,
+	upcoming: <UpcomingComponent step={step} />,
+})
+
+const ProgressNav = ({ steps }) => {
+	return (
+		<nav aria-label="Progress">
+			<ol role="list">
+				{steps.map((step, index) => (
+					<li key={index}>{ProgressStep(step)[step.status]}</li>
+				))}
+			</ol>
+		</nav>
+	)
+}
+```
+
+Use the `ProgressStep` function to map the `step.status` parameter to be matched with the object key returned by the `ProgressStep` function.
+
+## Conditional Rendering without Data
+
+When you want to condition the view without sending data, you can also create an object as below.
+
+```tsx
+const CurrentStepComponent = {
+	0: <NewJobForm form={form} />,
+	1: <JobPreview form={form} />,
+}[currentStepIndex]
+
+const FormMultiStep = () => <form onSubmit={form.handleSubmit(onSubmit)}>{CurrentStepComponent}</form>
+```
+
+Defines `CurrentStepComponent` with key and value. Here the key is `currentStepIndex` and the value is a react component.
+Here we specify which component will be rendered based on the current step index.

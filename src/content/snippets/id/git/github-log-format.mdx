@@ -1,0 +1,37 @@
+---
+title: 'Github log format'
+date: 2023-08-07
+author: inurhuda00
+---
+
+```bash
+git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset"
+```
+
+### Penjelasan
+
+-   `git log` adalah perintah untuk melihat riwayat commit pada repositori Git.
+-   `--graph` menampilkan grafik commit, yang memudahkan untuk melihat hubungan antar-commit.
+-   `--pretty` digunakan untuk mengatur format tampilan riwayat commit.
+-   `"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset"` adalah format tampilan yang digunakan untuk setiap commit. Format ini mencakup:
+    -   `%Cred%h%Creset` untuk menampilkan hash commit dalam warna merah.
+    -   `-%C(auto)%d%Creset` untuk menampilkan branch dan tag dalam warna sesuai konvensi.
+    -   `%s` untuk menampilkan pesan commit.
+    -   `%Cgreen(%ad)` untuk menampilkan tanggal komitter dalam warna hijau.
+    -   `%C(bold blue)<%an>%Creset` untuk menampilkan nama komitter dalam warna biru tebal.
+
+### Membuat Alias `glod` dengan git
+
+untuk membuat alias dengan git dapat dilakukan dengan perintah:
+
+```bash
+git config --global alias.glod "log --graph --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset\""
+```
+
+kita dapat memanggil alias dari git dengan perintah:
+
+```bash
+git glod
+```
+
+maka history dari commit akan muncul dengan format yang lebih rapi dan informatif

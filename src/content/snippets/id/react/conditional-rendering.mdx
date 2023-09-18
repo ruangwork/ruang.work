@@ -1,0 +1,45 @@
+---
+title: React Conditional Rendering
+date: 2023-09-18
+author: inurhuda00
+---
+
+## Conditional Rendering dengan Data
+
+```tsx
+const ProgressStep = (step: Step) => ({
+	current: <CurrentComponent step={step} />,
+	complete: <CompleteComponent step={step} />,
+	upcoming: <UpcomingComponent step={step} />,
+})
+
+const ProgressNav = ({ steps }) => {
+	return (
+		<nav aria-label="Progress">
+			<ol role="list">
+				{steps.map((step, index) => (
+					<li key={index}>{ProgressStep(step)[step.status]}</li>
+				))}
+			</ol>
+		</nav>
+	)
+}
+```
+
+Menggunakan fungsi `ProgressStep` untuk memetakan parameter `step.status` yang akan disesuaikan dengan kunci objek yang dikembalikan oleh fungsi `ProgressStep`.
+
+## Conditional Rendering tanpa Data
+
+Ketika kita ingin pengkondisian view tanpa mengirimkan data dapat juga dilakukan dengan membuat object seperti di bawah.
+
+```tsx
+const CurrentStepComponent = {
+	0: <NewJobForm form={form} />,
+	1: <JobPreview form={form} />,
+}[currentStepIndex]
+
+const FormMultiStep = () => <form onSubmit={form.handleSubmit(onSubmit)}>{CurrentStepComponent}</form>
+```
+
+Mendefinisikan `CurrentStepComponent` dengan key dan value. Disini key adalah `currentStepIndex` dan valuenya berupa component react.
+disini kita tentukan komponent mana yang akan dirender berdasarkan index current step.
